@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a4774" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" href="data:," />
+    <title>1on1コミュニケーション診断｜結果レポート サンプル</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="access-locked">
+    <section class="access-gate" aria-labelledby="access-title">
+      <form class="access-card" id="access-form" novalidate>
+        <div class="access-mark" aria-hidden="true">1on1</div>
+        <p class="access-label">COMMUNICATION REPORT</p>
+        <h1 id="access-title">閲覧パスワードを入力してください</h1>
+        <p class="access-description">1on1コミュニケーション診断のデモページです。</p>
+        <label for="access-password">パスワード</label>
+        <div class="access-input-row">
+          <input
+            id="access-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            aria-describedby="access-error"
+          />
+          <button type="submit">表示する</button>
+        </div>
+        <p class="access-error" id="access-error" role="alert" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <nav class="demo-toolbar" aria-label="レポート操作">
+      <a class="pdf-download" href="assets/1on1-communication-report-sample.pdf" download>
+        <svg aria-hidden="true"><use href="#icon-document" /></svg>
+        PDFダウンロード
+      </a>
+    </nav>
+
+    <!-- アイコンは外部ライブラリに依存せず、デモ単体で表示できるようにする -->
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="icon-chat" viewBox="0 0 24 24">
+        <path d="M7 18.5c-2.8-1-4.7-3.4-4.7-6.1C2.3 8.3 6.2 5 11 5s8.7 3.3 8.7 7.4-3.9 7.4-8.7 7.4c-1 0-2-.1-2.9-.4L4.7 21l2.3-2.5Z" />
+        <path d="M8 12.2h.1M11 12.2h.1M14 12.2h.1" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <path d="m15.3 15.3 5 5" />
+      </symbol>
+      <symbol id="icon-people" viewBox="0 0 24 24">
+        <circle cx="8" cy="8" r="3" /><circle cx="17" cy="9" r="2.5" />
+        <path d="M2.5 20c.4-4.1 2.3-6.2 5.5-6.2s5.1 2.1 5.5 6.2M13 15c1-.9 2.2-1.3 3.8-1.3 2.8 0 4.3 2 4.7 5.3" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <path d="M4 20V4M4 20h16M7 16l4-4 3 2 5-7" />
+        <path d="M16 7h3v3" />
+      </symbol>
+      <symbol id="icon-document" viewBox="0 0 24 24">
+        <path d="M6 2.8h8l4 4V21H6zM14 3v4h4M9 11h6M9 14.5h6M9 18h4" />
+      </symbol>
+      <symbol id="icon-diamond" viewBox="0 0 24 24">
+        <path d="m3 8 4-5h10l4 5-9 13zM3 8h18M7 3l5 18 5-18M8.5 8 12 3l3.5 5" />
+      </symbol>
+      <symbol id="icon-alert" viewBox="0 0 24 24">
+        <path d="M12 3 2.8 20h18.4zM12 8v6M12 17.5h.1" />
+      </symbol>
+      <symbol id="icon-quote" viewBox="0 0 24 24">
+        <path d="M5 11h5v7H3v-5c0-4 1.8-6.7 5.5-8M16 11h5v7h-7v-5c0-4 1.8-6.7 5.5-8" />
+      </symbol>
+      <symbol id="icon-bulb" viewBox="0 0 24 24">
+        <path d="M8.5 15.8c-1.4-1-2.3-2.7-2.3-4.7A5.8 5.8 0 0 1 12 5.3a5.8 5.8 0 0 1 5.8 5.8c0 2-.9 3.7-2.3 4.7-.8.6-1.1 1.2-1.1 2.1H9.6c0-.9-.3-1.5-1.1-2.1ZM9.5 21h5" />
+        <path d="M12 1v2M3.5 4.5 5 6M20.5 4.5 19 6M1 12h2M21 12h2" />
+      </symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24">
+        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
+        <circle cx="12" cy="12" r="2.5" />
+      </symbol>
+      <symbol id="icon-headphones" viewBox="0 0 24 24">
+        <path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13H2.5v6H7v-6zM20 13h1.5v6H17v-6z" />
+      </symbol>
+      <symbol id="icon-hand" viewBox="0 0 24 24">
+        <path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V10M10 10V3.8a1.5 1.5 0 0 1 3 0V10M13 10V4.8a1.5 1.5 0 0 1 3 0V11M16 11V7a1.5 1.5 0 0 1 3 0v7c0 4.5-2.8 7-7 7-3.8 0-5.7-2-7.3-5L3 13.2c-.7-1.4 1.1-2.8 2.2-1.7L8 14" />
+      </symbol>
+    </svg>
+
+    <main class="report-shell">
+      <header class="report-header reveal">
+        <div class="header-copy">
+          <h1>1on1コミュニケーション診断</h1>
+          <p class="header-meta">27問・5段階回答｜結果レポート サンプル</p>
+          <p class="header-lead">
+            あなたの1on1のコミュニケーションのクセと、<br />
+            相手のタイプに合わせた関わり方のヒントをお届けします。
+          </p>
+        </div>
+        <div class="header-visual" aria-hidden="true">
+          <img src="assets/reference-report.png" alt="" />
+        </div>
+      </header>
+
+      <section class="summary-card reveal" aria-labelledby="summary-title">
+        <div class="summary-type">
+          <div class="summary-icon"><svg><use href="#icon-chat" /></svg></div>
+          <div>
+            <p>あなたに最も出やすい傾向</p>
+            <h2 id="summary-title">自己主張型</h2>
+            <span>1on1では「しゃべりすぎグセ」</span>
+          </div>
+        </div>
+        <div class="summary-message">
+          伝える力が強いぶん、つい自分が<br class="desktop-only" />会話の中心になりやすいタイプです。
+        </div>
+      </section>
+
+      <div class="analysis-grid">
+        <section class="panel habit-panel reveal" aria-labelledby="habit-title">
+          <div class="section-heading">
+            <span class="section-number">1</span>
+            <h2 id="habit-title">1on1の7つのクセ診断</h2>
+          </div>
+          <p class="score-label">あなたの傾向スコア</p>
+          <div class="habit-chart" data-chart>
+            <div class="bar-row">
+              <span class="bar-name">しゃべりすぎグセ</span>
+              <div class="bar-track"><span class="bar-fill orange" data-value="75"></span></div>
+              <strong class="score-number" data-count="75">0</strong>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">自分ものさしグセ</span>
+              <div class="bar-track"><span class="bar-fill teal" data-value="58"></span></div>
+              <strong class="score-number" data-count="58">0</strong>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">正解押しグセ</span>
+              <div class="bar-track"><span class="bar-fill cyan" data-value="50"></span></div>
+              <strong class="score-number" data-count="50">0</strong>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">質問連打グセ</span>
+              <div class="bar-track"><span class="bar-fill cyan-soft" data-value="42"></span></div>
+              <strong class="score-number" data-count="42">0</strong>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">ダメ出し先行グセ</span>
+              <div class="bar-track"><span class="bar-fill blue" data-value="33"></span></div>
+              <strong class="score-number" data-count="33">0</strong>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">できる上司グセ</span>
+              <div class="bar-track"><span class="bar-fill blue-soft" data-value="25"></span></div>
+              <strong class="score-number" data-count="25">0</strong>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">反応うすグセ</span>
+              <div class="bar-track"><span class="bar-fill pale" data-value="17"></span></div>
+              <strong class="score-number" data-count="17">0</strong>
+            </div>
+            <div class="axis" aria-hidden="true"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></div>
+          </div>
+          <p class="chart-note">※高いほど、その傾向が出やすいことを示します。</p>
+        </section>
+
+        <section class="panel vak-panel reveal" aria-labelledby="vak-title">
+          <div class="section-heading">
+            <span class="section-number">2</span>
+            <h2 id="vak-title">VAKコミュニケーション傾向</h2>
+          </div>
+          <p class="score-label">あなたの傾向スコア</p>
+          <div class="vak-chart" data-chart>
+            <div class="vak-row">
+              <span>V｜視覚・全体像</span>
+              <div class="vak-track"><span class="vak-fill vak-v" data-value="40"></span></div>
+              <strong class="score-number" data-count="40">0</strong>
+            </div>
+            <div class="vak-row">
+              <span>A｜聴覚・言葉・順序</span>
+              <div class="vak-track"><span class="vak-fill vak-a" data-value="32"></span></div>
+              <strong class="score-number" data-count="32">0</strong>
+            </div>
+            <div class="vak-row">
+              <span>K｜感覚・体験</span>
+              <div class="vak-track"><span class="vak-fill vak-k" data-value="28"></span></div>
+              <strong class="score-number" data-count="28">0</strong>
+            </div>
+            <div class="vak-axis" aria-hidden="true"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></div>
+          </div>
+          <div class="insight-box">
+            <svg><use href="#icon-bulb" /></svg>
+            <p>あなたは全体像やイメージから理解しやすい傾向があります。ただし、部下も同じとは限りません。</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel result-guide reveal" aria-labelledby="guide-title">
+        <div class="section-heading">
+          <span class="section-number">3</span>
+          <h2 id="guide-title">この結果の見方</h2>
+        </div>
+        <div class="guide-steps">
+          <article>
+            <div class="step-icon"><svg><use href="#icon-search" /></svg></div>
+            <div><h3><span>01</span> 気づく</h3><p>自分の1on1のクセを知る</p></div>
+          </article>
+          <span class="step-arrow">›</span>
+          <article>
+            <div class="step-icon"><svg><use href="#icon-people" /></svg></div>
+            <div><h3><span>02</span> 合わせる</h3><p>相手の受け取り方の違いを<br />理解する</p></div>
+          </article>
+          <span class="step-arrow">›</span>
+          <article>
+            <div class="step-icon"><svg><use href="#icon-chart" /></svg></div>
+            <div><h3><span>03</span> 引き出す</h3><p>質問で相手の考えを<br />引き出す</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel type-detail reveal" aria-labelledby="type-title">
+        <div class="section-heading type-heading">
+          <span class="section-number">4</span>
+          <h2 id="type-title">第1タイプ｜自己主張型</h2>
+          <span class="habit-chip">しゃべりすぎグセ</span>
+        </div>
+        <div class="detail-grid">
+          <article class="detail-card">
+            <h3><svg><use href="#icon-document" /></svg>ひと言でいうと</h3>
+            <p>説明する力が高い一方で、1on1では部下が考える余白まで埋めてしまいやすいタイプです。</p>
+          </article>
+          <article class="detail-card">
+            <h3><svg><use href="#icon-diamond" /></svg>あなたの強み</h3>
+            <p>考えを言葉にし、会話を前に進める力。判断や説明が必要な場面では大きな強みになります。</p>
+          </article>
+          <article class="detail-card warning-card">
+            <h3><svg><use href="#icon-alert" /></svg>行き過ぎると</h3>
+            <ul>
+              <li>部下が話す前に会話が進む</li>
+              <li>自分で考える時間が減る</li>
+              <li>1on1が上司の説明時間になる</li>
+            </ul>
+          </article>
+          <article class="detail-card perception-card">
+            <h3><svg><use href="#icon-people" /></svg>部下にはこう見えているかも</h3>
+            <blockquote>「相談したかったのに、気づいたら上司の話を聞く時間になっていた。」</blockquote>
+          </article>
+          <article class="detail-card action-card">
+            <h3><svg><use href="#icon-bulb" /></svg>次の1on1で一つだけ試すなら</h3>
+            <p>質問したあと、3秒待つ。</p>
+          </article>
+          <article class="detail-card growth-card">
+            <h3><svg><use href="#icon-chart" /></svg>さらに伸ばしたい3つの力</h3>
+            <ol>
+              <li><span>1</span>待つ力</li>
+              <li><span>2</span>聞き切る力</li>
+              <li><span>3</span>引き出す力</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel question-guide reveal" aria-labelledby="question-title">
+        <div class="section-heading">
+          <span class="section-number">5</span>
+          <h2 id="question-title">相手によって、話しやすい問いかけは違います</h2>
+        </div>
+        <div class="question-grid">
+          <article class="question-card visual-type">
+            <div class="question-head">
+              <div class="question-icon"><svg><use href="#icon-eye" /></svg></div>
+              <div><h3>V｜視覚・全体像タイプ</h3><p>全体像やイメージから理解する人に</p></div>
+            </div>
+            <blockquote>「どうなっているのが理想に見える？」</blockquote>
+          </article>
+          <article class="question-card auditory-type">
+            <div class="question-head">
+              <div class="question-icon"><svg><use href="#icon-headphones" /></svg></div>
+              <div><h3>A｜聴覚・言葉・順序タイプ</h3><p>言葉や順序で整理して理解する人に</p></div>
+            </div>
+            <blockquote>「今の状況を順番に整理すると<br />どうなる？」</blockquote>
+          </article>
+          <article class="question-card kinesthetic-type">
+            <div class="question-head">
+              <div class="question-icon"><svg><use href="#icon-hand" /></svg></div>
+              <div><h3>K｜感覚・体験タイプ</h3><p>体験や実感から理解する人に</p></div>
+            </div>
+            <blockquote>「実際にやってみて、<br />どんな感じだった？」</blockquote>
+          </article>
+        </div>
+      </section>
+
+      <footer class="report-footer reveal">
+        <img src="assets/reference-report.png" alt="話す力を、引き出す力へ。" />
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
