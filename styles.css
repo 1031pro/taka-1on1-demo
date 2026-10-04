@@ -782,8 +782,19 @@ svg {
 }
 
 @media (max-width: 600px) {
+  html {
+    scrollbar-gutter: stable both-edges;
+  }
+
   body {
+    display: flex;
+    justify-content: center;
     background: #fff;
+  }
+
+  .report-shell {
+    width: 100%;
+    margin-inline: auto;
   }
 
   .demo-toolbar {
@@ -808,9 +819,10 @@ svg {
 
   .summary-card,
   .analysis-grid,
-  .panel {
-    margin-right: 12px;
-    margin-left: 12px;
+  .report-shell > .panel {
+    width: calc(100% - 24px);
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .summary-card {
@@ -925,7 +937,8 @@ svg {
 
   .mobile-pdf-download {
     display: block;
-    margin: 24px 12px 8px;
+    width: calc(100% - 24px);
+    margin: 24px auto 8px;
   }
 
   .mobile-pdf-download .pdf-download {
