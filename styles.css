@@ -183,9 +183,8 @@ body[data-screen="intro"] .site-header { display: none; }
 .cta-button { align-self: flex-start; margin-top: auto; padding: 8px 14px; border-radius: 8px; color: #fff; background: #d94a3b; font-weight: 800; }
 .result-note { margin: 22px 0 0; padding: 18px 20px; border-radius: 12px; color: var(--muted); background: #edf2f5; font-size: .9rem; }
 .result-actions { display: flex; justify-content: center; gap: 14px; margin: 30px 0; }
-.result-footer { position: relative; display: block; height: 220px; border-radius: 24px; overflow: hidden; background: var(--navy); }
-.result-footer img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; opacity: .96; }
-.result-footer span { position: absolute; right: 24px; bottom: 18px; padding: 6px 12px; border-radius: 999px; color: var(--navy); background: rgba(255,255,255,.9); font-size: .78rem; font-weight: 800; }
+.result-footer { position: relative; display: block; aspect-ratio: 1191 / 60; border-radius: 0 0 14px 14px; overflow: hidden; background: var(--navy); }
+.result-footer img { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; max-width: none; }
 
 @media (max-width: 820px) {
   .site-header, .intro-screen, .question-screen, .result-screen { width: min(100% - 28px, 680px); }
@@ -212,7 +211,6 @@ body[data-screen="intro"] .site-header { display: none; }
   .focus-heading { align-items: start; flex-direction: column; }
   .result-actions { flex-direction: column-reverse; }
   .result-actions button { width: 100%; }
-  .result-footer { height: 160px; }
 
   .intro-screen { width: min(100% - 28px, 680px); padding-top: 14px; }
   .intro-sheet { border-radius: 18px; }
@@ -287,5 +285,5 @@ body[data-screen="intro"] .site-header { display: none; }
   .report-grid { gap: 5mm; }
   .report-card { break-inside: avoid; }
   .cta-grid > a, .rank-row, .strength-copy, .result-note { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-  .result-footer { height: 48mm; break-inside: avoid; }
+  .result-footer { break-inside: avoid; }
 }
