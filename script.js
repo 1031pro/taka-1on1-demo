@@ -31,8 +31,8 @@
     { value: 2, label: "ときどきあった", note: "" },
     { value: 3, label: "よくあった", note: "" },
     { value: 4, label: "ほぼ毎回あった", note: "" },
-    { value: "not-applicable", label: "該当する場面がなかった", note: "点数には含めません", missing: true },
-    { value: "unknown", label: "思い出せない・判断できない", note: "点数には含めません", missing: true },
+    { value: "not-applicable", label: "該当する場面がなかった", note: "", missing: true },
+    { value: "unknown", label: "思い出せない・判断できない", note: "", missing: true },
   ];
 
   const types = [
@@ -248,7 +248,7 @@
     const box = document.querySelector("#reference-scores");
     if (references.length) {
       box.hidden = false;
-      box.textContent = references.map((item) => item.status === "reference" ? `${item.name}：${item.score}/12（2問のみの参考値・順位対象外）` : `${item.name}：判定保留`).join("　／　");
+      box.textContent = references.map((item) => item.status === "reference" ? `${item.name}：参考` : `${item.name}：判定保留`).join("　／　");
     } else {
       box.hidden = true;
       box.textContent = "";
