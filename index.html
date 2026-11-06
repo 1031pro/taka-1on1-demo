@@ -7,9 +7,9 @@
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <link rel="icon" href="data:," />
     <title>1on1コミュニケーション診断｜確認用</title>
-    <link rel="stylesheet" href="styles.css?v=20261107-1" />
+    <link rel="stylesheet" href="styles.css?v=20261107-2" />
   </head>
-  <body class="access-locked">
+  <body class="access-locked" data-screen="intro">
     <section class="access-gate" aria-labelledby="access-title">
       <form class="access-card" id="access-form" novalidate>
         <div class="brand-mark" aria-hidden="true">1on1</div>
@@ -35,27 +35,48 @@
 
       <main>
         <section class="screen intro-screen is-active" id="intro-screen" aria-labelledby="intro-title">
-          <div class="hero">
-            <div class="hero-copy">
-              <p class="eyebrow">21 QUESTIONS / 7 TENDENCIES</p>
-              <h1 id="intro-title">あなたの1on1に<br />出やすい傾向を知る</h1>
-              <p class="hero-lead">直近3か月の部下との1on1や、相談内容に関係する業務のやり取りを思い出してお答えください。</p>
-              <button class="primary-button" id="start-button" type="button">診断をはじめる <span aria-hidden="true">→</span></button>
+          <div class="intro-sheet">
+            <h1 class="visually-hidden" id="intro-title">1on1コミュニケーション診断</h1>
+            <div class="intro-reference-cover" aria-hidden="true">
+              <img src="assets/result-reference.jpg?v=20261107-2" alt="" />
+              <span class="cover-preview-label">確認用</span>
             </div>
-            <div class="hero-panel" aria-label="診断の概要">
-              <p class="hero-panel-label">この診断でわかること</p>
-              <strong>1on1で出やすい<br />7つの行動傾向</strong>
-              <div class="hero-types" aria-hidden="true">
-                <span>話す</span><span>比べる</span><span>否定する</span><span>急ぐ</span><span>干渉する</span><span>飾る</span><span>反応する</span>
+            <div class="intro-mobile-cover">
+              <span class="cover-preview-label">確認用</span>
+              <p>1on1の時間、</p>
+              <h1>部下の「<em>本音</em>」が<br />見えていますか？</h1>
+              <p>あなたの1on1が変わる、コミュニケーション診断</p>
+            </div>
+
+            <div class="intro-summary-band">
+              <div class="intro-summary-title">
+                <span>1on1</span>
+                <div><strong>コミュニケーション診断</strong><small>21問・5段階回答</small></div>
               </div>
+              <p>自分では気づきにくい、1on1での<br />コミュニケーション傾向を振り返ります。</p>
+            </div>
+
+            <div class="intro-content">
+              <div class="report-style-heading">
+                <span>01</span>
+                <h2>診断の進め方</h2>
+                <p>直近3か月のやり取りを思い出してお答えください</p>
+              </div>
+              <p class="intro-lead">部下との1on1や、その相談内容に関係する業務のやり取りについて、実際に行った対応を回答します。良い・悪いを決めるための診断ではありません。</p>
+              <div class="intro-steps">
+                <article><span>1</span><div><strong>21問に答える</strong><p>行動の頻度に最も近い回答を選びます。</p></div></article>
+                <i aria-hidden="true">›</i>
+                <article><span>2</span><div><strong>7つの傾向を確認</strong><p>各タイプを12点満点で表示します。</p></div></article>
+                <i aria-hidden="true">›</i>
+                <article><span>3</span><div><strong>次の1on1で試す</strong><p>結果から、小さな変え方を1つ選びます。</p></div></article>
+              </div>
+              <div class="intro-start-area">
+                <button class="primary-button" id="start-button" type="button">診断をはじめる <span aria-hidden="true">→</span></button>
+                <p>回答内容は保存されません</p>
+              </div>
+              <div class="intro-caution"><strong>診断について</strong><p>この診断は自己回答にもとづくコミュニケーション傾向の目安です。部下の本音や職場の課題を断定するものではありません。</p></div>
             </div>
           </div>
-          <div class="intro-grid">
-            <article><span>01</span><h2>21問に回答</h2><p>実際に行った対応を、頻度で振り返ります。</p></article>
-            <article><span>02</span><h2>7タイプを採点</h2><p>各タイプを0〜12点で表示します。</p></article>
-            <article><span>03</span><h2>次の行動へ</h2><p>次回の1on1で試せる変化を提案します。</p></article>
-          </div>
-          <p class="notice">この診断は良い・悪いを決めるものではありません。本人の自己回答にもとづく振り返りのヒントです。</p>
         </section>
 
         <section class="screen question-screen" id="question-screen" aria-labelledby="question-heading">
@@ -114,6 +135,6 @@
         </section>
       </main>
     </div>
-    <script src="script.js?v=20261107-1"></script>
+    <script src="script.js?v=20261107-2"></script>
   </body>
 </html>

@@ -71,6 +71,42 @@ img { max-width: 100%; display: block; }
 .intro-grid p { margin: 0; color: var(--muted); }
 .notice { margin: 24px 0 0; padding: 18px 20px; border-left: 4px solid var(--teal); color: var(--muted); background: #edf6f7; }
 
+/* トップ画面：支給された結果レポートの意匠へ合わせる */
+body[data-screen="intro"] { background: #edf2f4; }
+body[data-screen="intro"] .site-header { display: none; }
+.intro-screen { width: min(1191px, 100%); padding: 26px 0 80px; }
+.intro-sheet { overflow: hidden; background: #fff; box-shadow: 0 18px 48px rgba(27, 54, 70, .13); }
+.intro-reference-cover { position: relative; aspect-ratio: 1191 / 284; overflow: hidden; background: #243b4b; }
+.intro-reference-cover img { width: 100%; height: auto; }
+.cover-preview-label { position: absolute; z-index: 2; top: 18px; right: 20px; padding: 6px 13px; border: 1px solid rgba(255,255,255,.75); color: #fff; background: rgba(35,59,75,.78); font-size: .76rem; font-weight: 800; }
+.intro-mobile-cover { display: none; }
+.intro-summary-band { position: relative; z-index: 1; display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 34px; width: calc(100% - 144px); min-height: 142px; margin: -30px auto 0; padding: 24px 36px; border-radius: 19px; background: #fff5df; box-shadow: 0 8px 20px rgba(51,55,45,.08); }
+.intro-summary-title { display: flex; align-items: center; gap: 18px; padding-right: 32px; border-right: 1px solid #d9c9a6; }
+.intro-summary-title > span { display: grid; place-items: center; flex: 0 0 72px; height: 72px; border-radius: 50%; color: #fff; background: #1d607e; font-family: Georgia, "Yu Mincho", serif; font-size: 1.6rem; font-weight: 700; }
+.intro-summary-title strong { display: block; color: #263c4b; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: clamp(1.25rem, 2.2vw, 1.85rem); line-height: 1.35; }
+.intro-summary-title small { display: block; margin-top: 6px; color: #98243c; font-weight: 800; }
+.intro-summary-band > p { margin: 0; color: #263c4b; font-size: 1.02rem; font-weight: 700; line-height: 1.65; }
+.intro-content { padding: 54px 84px 66px; }
+.report-style-heading { display: grid; grid-template-columns: 86px auto 1fr; align-items: end; border-bottom: 2px solid #1d607e; }
+.report-style-heading > span { align-self: stretch; display: grid; place-items: center; min-height: 66px; border-radius: 42px 42px 0 0; color: #fff; background: #163f59; font-family: Georgia, "Yu Mincho", serif; font-size: 2.2rem; font-style: italic; }
+.report-style-heading h2 { margin: 0; padding: 0 18px 8px; color: #263c4b; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: clamp(1.55rem, 3vw, 2.2rem); line-height: 1.4; }
+.report-style-heading p { justify-self: end; margin: 0; padding-bottom: 10px; color: #263c4b; font-size: .9rem; font-weight: 700; }
+.report-style-heading p::before { content: "»"; margin-right: 6px; color: #1d607e; font-size: 1.3rem; }
+.intro-lead { margin: 24px 4px 30px; color: #263c4b; font-size: 1.05rem; font-weight: 600; }
+.intro-steps { display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; align-items: center; gap: 12px; }
+.intro-steps article { display: flex; align-items: center; gap: 16px; min-height: 104px; padding: 18px 20px; border-radius: 12px; background: #fff5df; }
+.intro-steps article > span { display: grid; place-items: center; flex: 0 0 54px; height: 54px; border-radius: 50%; color: #fff; background: #9c243b; font-family: Georgia, serif; font-size: 1.8rem; }
+.intro-steps strong { display: block; color: #292825; font-size: 1.05rem; }
+.intro-steps p { margin: 3px 0 0; color: #5f5a50; font-size: .82rem; line-height: 1.45; }
+.intro-steps > i { color: #9c243b; font-family: Georgia, serif; font-size: 2.4rem; font-style: normal; text-align: center; }
+.intro-start-area { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 36px 0 30px; }
+.intro-start-area .primary-button { min-width: 260px; background: #9c243b; box-shadow: 0 10px 22px rgba(156,36,59,.22); }
+.intro-start-area > p { margin: 0; color: #6d7477; font-size: .86rem; }
+.intro-start-area > p::before { content: "✓"; margin-right: 5px; color: #1d607e; font-weight: 900; }
+.intro-caution { display: grid; grid-template-columns: 160px 1fr; overflow: hidden; border-radius: 10px; background: #e4eef4; }
+.intro-caution strong { display: grid; place-items: center; padding: 16px; color: #fff; background: #263c4b; }
+.intro-caution p { margin: 0; padding: 15px 20px; color: #263c4b; font-size: .9rem; }
+
 .question-layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: clamp(28px, 5vw, 62px); align-items: start; max-width: 1040px; margin: 50px auto 0; }
 .progress-panel { position: sticky; top: 24px; padding: 30px; border-radius: 22px; color: #fff; background: var(--navy); }
 .progress-panel .eyebrow { color: #8ed5dd; }
@@ -184,6 +220,36 @@ img { max-width: 100%; display: block; }
   .result-actions { flex-direction: column-reverse; }
   .result-actions button { width: 100%; }
   .result-footer { height: 160px; }
+
+  .intro-screen { width: min(100% - 28px, 680px); padding-top: 14px; }
+  .intro-sheet { border-radius: 18px; }
+  .intro-reference-cover { display: none; }
+  .intro-mobile-cover { position: relative; display: block; overflow: hidden; padding: 46px 28px 42px; color: #fff; background: #263c4b; }
+  .intro-mobile-cover::before { content: ""; position: absolute; top: 0; left: -54px; width: 92px; height: 100%; background: #9c243b; transform: skewX(-18deg); }
+  .intro-mobile-cover::after { content: ""; position: absolute; top: 0; right: -72px; width: 116px; height: 100%; background: #17789c; transform: skewX(-18deg); }
+  .intro-mobile-cover > *:not(.cover-preview-label) { position: relative; z-index: 1; }
+  .intro-mobile-cover > p:first-of-type { margin: 0 0 2px; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 1.35rem; font-weight: 700; }
+  .intro-mobile-cover h1 { margin: 0; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: clamp(1.8rem, 7vw, 2.8rem); line-height: 1.4; letter-spacing: .02em; }
+  .intro-mobile-cover h1 em { color: #f3b514; font-style: normal; }
+  .intro-mobile-cover > p:last-child { margin: 14px 0 0; font-size: .82rem; font-weight: 700; }
+  .intro-mobile-cover .cover-preview-label { top: 12px; right: 14px; }
+  .intro-summary-band { grid-template-columns: 1fr; gap: 18px; width: calc(100% - 28px); margin: -12px auto 0; padding: 24px 22px; }
+  .intro-summary-title { padding: 0 0 18px; border-right: 0; border-bottom: 1px solid #d9c9a6; }
+  .intro-summary-title > span { flex-basis: 62px; height: 62px; font-size: 1.35rem; }
+  .intro-summary-band > p br { display: none; }
+  .intro-content { padding: 38px 22px 34px; }
+  .report-style-heading { grid-template-columns: 64px 1fr; }
+  .report-style-heading > span { min-height: 58px; font-size: 1.7rem; }
+  .report-style-heading h2 { padding-left: 13px; font-size: 1.5rem; }
+  .report-style-heading p { display: none; }
+  .intro-lead { font-size: .98rem; }
+  .intro-steps { grid-template-columns: 1fr; gap: 10px; }
+  .intro-steps > i { display: none; }
+  .intro-steps article { min-height: 0; }
+  .intro-start-area { flex-direction: column; gap: 10px; }
+  .intro-start-area .primary-button { width: 100%; min-width: 0; }
+  .intro-caution { grid-template-columns: 1fr; }
+  .intro-caution strong { justify-content: start; }
 }
 
 @media (max-width: 520px) {
@@ -207,6 +273,13 @@ img { max-width: 100%; display: block; }
   .change-row { grid-template-columns: 1fr; gap: 4px; }
   .change-row span:nth-child(2) { transform: rotate(90deg); }
   .cta-grid > a { min-height: 230px; padding: 22px; }
+  .intro-mobile-cover { padding: 42px 22px 34px; }
+  .intro-summary-title strong { font-size: 1.05rem; white-space: nowrap; }
+  .intro-summary-title small { font-size: .78rem; }
+  .intro-summary-band > p { font-size: .92rem; }
+  .intro-content { padding-inline: 16px; }
+  .intro-steps article { padding: 16px; }
+  .intro-steps article > span { flex-basis: 48px; height: 48px; font-size: 1.55rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
