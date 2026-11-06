@@ -243,7 +243,7 @@
       const rank = 1 + valid.filter((other) => other.score > item.score).length;
       const row = document.createElement("div");
       row.className = `rank-row${rank === 1 ? " is-top" : ""}`;
-      row.innerHTML = `<span class="rank-number">${rank === 1 && valid.filter((other) => other.score === item.score).length > 1 ? "同率1位" : `${rank}位`}</span><span class="rank-name"></span><span class="rank-bar"><span></span></span><span class="rank-score">${item.score}/12</span>`;
+      row.innerHTML = `<span class="rank-number">${rank}位</span><span class="rank-name"></span><span class="rank-bar"><span></span></span><span class="rank-score">${item.score}/12</span>`;
       row.querySelector(".rank-name").textContent = item.name;
       rankingList.appendChild(row);
       requestAnimationFrame(() => requestAnimationFrame(() => { row.querySelector(".rank-bar span").style.width = `${(item.score / 12) * 100}%`; }));
@@ -346,7 +346,7 @@
       renderException("複数傾向が同程度", "複数の傾向が同じ程度で表れています。現在の回答だけで一つの注目タイプを決めることは避け、各質問のうち心当たりのある場面から一つ選んでください。");
     } else if (leaders.length > 1) {
       document.querySelector("#ranking-title").textContent = "あなたに出やすい傾向 TOP3";
-      renderException("同率1位｜複合傾向", `あなたの回答では「${leaders.map((item) => item.name).join("」「")}」が同じ得点でした。どれか一つに決めつけず、それぞれの行動を振り返ってみましょう。まずは思い当たる行動を一つ選び、次の1on1で試せる変化を考えてください。`);
+      renderException(leaders.map((item) => item.name).join("・"), "これらの傾向が同じ得点でした。どれか一つに決めつけず、それぞれの行動を振り返ってみましょう。まずは思い当たる行動を一つ選び、次の1on1で試せる変化を考えてください。");
     } else {
       document.querySelector("#ranking-title").textContent = "あなたに出やすい傾向 TOP3";
       renderFocusReport(valid[0]);
