@@ -13,7 +13,7 @@
 .report-header .header-photo svg{width:100%;height:100%;max-height:none}
 .summary{z-index:2;margin:-30px 6.2% 0;padding:12px 12px 12px 24px;min-height:188px;grid-template-columns:480px minmax(0,1fr);gap:23px;border-radius:18px;background:#fcf4df}
 .summary h2{font-family:ReportSerif,serif;font-weight:800;font-size:24px;margin:0 0 14px;line-height:1.2}
-.top-label{background:linear-gradient(90deg,#226f96 0 34%,#817f30 34% 67%,#98203d 67%);background-clip:text;color:transparent;font:700 30px Georgia,serif}
+.top-label{font:700 30px Georgia,serif;color:#98203d}.top-label>span:first-child{color:#226f96}.top-label>span:nth-child(2){color:#817f30}.top-label>span:nth-child(3){color:#226f96}
 .rank{grid-template-columns:34px 165px 148px 1fr;gap:6px;margin:3px 0;line-height:1.2}
 .rank strong{font-size:20px;font-weight:800}.rank b{font-size:31px;height:34px}.rank em{font-size:28px}.rank small{font:700 17px ReportSans,sans-serif}.rank-1 em{color:#20658d}.rank-2 em{color:#7b7d35}
 .focus h2{font-family:ReportSans,sans-serif;margin:0;min-height:40px;position:relative}
