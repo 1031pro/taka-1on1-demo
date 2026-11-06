@@ -124,6 +124,7 @@
   const passwordHash = "0d563256b074dbd95ca18f4903b5ca0968ceeb8c0aa543f1a3b86895424bc84f";
   const answers = Array(questions.length).fill(null);
   let currentQuestion = 0;
+  let isAdvancing = false;
 
   const hashText = async (text) => {
     const data = new TextEncoder().encode(text);
@@ -168,7 +169,6 @@
     document.querySelector("#progress-current").textContent = number;
     document.querySelector("#question-number").textContent = `Q${String(number).padStart(2, "0")}`;
     document.querySelector("#question-heading").textContent = questions[currentQuestion];
-    document.querySelector("#next-label").textContent = number === questions.length ? "診断結果を見る" : "次の質問へ";
     document.querySelector("#back-button").disabled = currentQuestion === 0;
     document.querySelector("#question-error").textContent = "";
 
@@ -187,6 +187,7 @@
       input.value = String(choice.value);
       input.checked = answers[currentQuestion] === choice.value;
       input.id = `answer-${index}`;
+      input.addEventListener("click", () => advanceFromSelection(choice.value));
       const copy = document.createElement("span");
       const strong = document.createElement("strong");
       strong.textContent = choice.label;
@@ -206,6 +207,24 @@
     if (!selected) return null;
     const numeric = Number(selected.value);
     return Number.isNaN(numeric) ? selected.value : numeric;
+  };
+
+  const advanceFromSelection = (answer) => {
+    if (isAdvancing) return;
+    answers[currentQuestion] = answer;
+    isAdvancing = true;
+    document.querySelectorAll('input[name="answer"]').forEach((input) => { input.disabled = true; });
+    window.setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+        document.querySelector("#question-heading").focus({ preventScroll: true });
+        isAdvancing = false;
+        return;
+      }
+      renderResult();
+      isAdvancing = false;
+    }, 180);
   };
 
   const calculateScores = () => types.map((type) => {
@@ -342,22 +361,7 @@
     showScreen("question");
   });
 
-  document.querySelector("#question-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const answer = selectedAnswer();
-    if (answer === null) {
-      document.querySelector("#question-error").textContent = "回答を1つ選んでください。";
-      return;
-    }
-    answers[currentQuestion] = answer;
-    if (currentQuestion < questions.length - 1) {
-      currentQuestion += 1;
-      renderQuestion();
-      document.querySelector("#question-heading").focus({ preventScroll: true });
-      return;
-    }
-    renderResult();
-  });
+  document.querySelector("#question-form").addEventListener("submit", (event) => event.preventDefault());
 
   document.querySelector("#back-button").addEventListener("click", () => {
     if (currentQuestion === 0) return;
