@@ -42,3 +42,5 @@
 .next>span{min-width:0}
 
 @media screen and (max-width:820px){.context .desktop-break{display:none}}
+
+.focus-copy:not(:has(.type-illustration)){display:block}
