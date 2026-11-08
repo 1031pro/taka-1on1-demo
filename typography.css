@@ -1,0 +1,51 @@
+/* 1191px支給見本の文字サイズ・段組みを基準。原稿の省略はしない。 */
+.report{font-weight:500;line-break:strict;overflow-wrap:normal}
+.rank b{line-height:34px}
+.rank strong,.rank small,.focus-copy,.dialogue p,.signs,.voice p,.context,.reason,.changes ul,.next,.cta>p,.footer p,.footer a{font-weight:550}
+.signs ul,.changes>div:last-child ul{color:#292521}
+.signs li,.changes li{line-height:1.5;text-wrap:pretty}
+.actions li{align-items:center;text-align:left;text-wrap:wrap}
+.action-copy{display:block;min-width:0;font-size:16px;line-height:1.125;font-weight:550}
+.action-copy strong{display:block;font-size:20px;line-height:1.2;font-weight:550;color:#292521;margin-bottom:3px;text-wrap:balance}
+.action-copy>span{display:block;color:#233c4b}
+.word-keep{white-space:nowrap}
+.dialogue p>span{min-width:0;line-break:strict;text-wrap:pretty}
+.focus-copy p,.reason,.voice p{line-break:strict;text-wrap:pretty}
+@media (min-width:1181px),print{
+ .summary{padding-left:22px;grid-template-columns:480px minmax(0,1fr);gap:23px}
+ .rank{grid-template-columns:34px 166px 148px 1fr;gap:6px;margin:3.5px 0}
+ .rank em{font-family:ReportSerif,serif;font-style:normal;font-weight:800}
+ .focus-copy{padding:10px 16px 4px;line-height:18px;align-items:flex-start}
+ .focus-copy p{max-width:296px;padding:0}.focus-copy svg{margin-left:auto}
+ .dialogue-columns{grid-template-columns:482px minmax(0,1fr);gap:28px}
+ .report-content>section:first-child .supplied-heading{margin-bottom:2px}
+ .dialogue-columns>div+div{padding-left:10px}
+ .dialogue p{margin:4px 0;line-height:27px;gap:16px}
+ .dialogue b{flex:none;align-self:flex-start;font-weight:500}
+ .signs{min-height:102px;gap:12px;margin-top:20px}
+ .signs>b{min-width:162px;font-weight:700}
+ .signs ul{padding-top:2px;padding-bottom:2px;margin:0;line-height:21.6px}.signs li{line-height:21.6px}
+ .voice{align-items:flex-start;gap:42px}.voice>div{padding:10px 14px;min-height:102px}
+ .voice svg{margin-top:20px;width:70px;flex:none}
+ .voice p{line-height:25.5px;margin-top:6px}
+ .context{margin-top:32px;padding-left:20px;padding-right:0;line-height:19.2px}
+ .reason{font-size:18px;line-height:21.6px;margin-left:6px;margin-right:0}
+ .actions{gap:34px}.actions li{padding:8px 10px;gap:10px;min-height:74px}
+ .actions li:before{font-family:ReportSerif,serif;font-style:normal;font-weight:900;font-size:40px}
+ .changes{grid-template-columns:476px 40px minmax(0,1fr);gap:14px}
+ .changes ul{margin:0;padding-left:32px;line-height:28px;flex:1}
+ .changes li{line-height:28px;text-wrap:pretty}.changes svg{flex:none}
+ .changes b{font-weight:500}.changes>div{min-height:103px}
+ .next{font-size:18.25px;line-height:1.25}.cta>p{font-size:18px;line-height:1.2}
+ .footer p{font-size:12px}.footer a{font-size:14px}
+}
+@media screen and (max-width:1180px){
+ .action-copy strong{font-size:18px}.action-copy{font-size:16px;line-height:1.5}
+}
+@media screen and (max-width:820px){
+ .rank b{line-height:28px}.copy-break{display:none}
+ .dialogue p,.focus-copy,.voice p,.reason,.context{line-height:1.6}
+ .actions li{padding:12px;min-height:80px}.action-copy strong{margin-bottom:2px}
+ .signs li+li,.changes li+li{margin-top:5px}
+ .changes ul{text-wrap:pretty}.focus-copy p{max-width:none}
+}
