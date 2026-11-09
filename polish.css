@@ -157,3 +157,53 @@
 
 .question h1{text-wrap:pretty}
 .intro-content>p{text-wrap:pretty}
+
+/* Claudeレビュー対応：現行原稿、共通書体、等倍率の画像と文字組み。 */
+.flow-text{display:inline!important;color:inherit!important;word-break:keep-all;overflow-wrap:anywhere}
+.action-copy>.word-keep{display:inline}
+.heading-pair>.supplied-heading{display:none}
+.heading-pair>.section-heading:not(.supplied-heading){display:flex}
+.section-heading i{background:none;border-radius:0;box-shadow:none;width:88px;min-width:88px;height:50px;display:flex;align-items:center}
+.section-heading .heading-number{width:100%;height:auto}
+.section-heading:before{content:none}
+.rank em{font-family:ReportSerif,serif;font-style:normal;font-weight:800}
+.rank strong,.rank small{font-weight:700}
+.rank small{margin-left:.25em}
+.signs-copy{align-self:center;text-wrap:pretty}
+.dialogue p[data-who="部下"]>span{color:#18668d}
+.changes>div{position:relative;padding-right:122px;background:#e3eef7}
+.changes>div:last-child{background:#f8e8e9}
+.changes>div .source-crop{position:absolute;bottom:5px;right:6px;margin:0}
+.changes>div:first-child .source-crop{width:100px;height:59px}
+.changes>div:last-child .source-crop{width:72px;height:58px;right:5px;margin:0}
+.changes ul{font-weight:600}
+.changes li:before{left:-18px;top:.55em;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid #213847}
+.changes>div:last-child li:before{border-left-color:#902434}
+.type-illustration[src$="chara07.png"]{transform:translateX(8px)}
+.header-copy>p:first-child strong,.offer h3 b{font-family:ReportSerif,serif}
+@media screen and (max-width:820px){
+ .report-header .header-photo{line-height:0;border-top:0}
+ .report-header .header-photo svg{display:block;width:100%;height:auto}
+ .section-heading i{width:52px;min-width:52px;height:36px}
+ .rank{grid-template-columns:28px minmax(90px,1fr) 18% 76px}
+ .rank small{font-size:13px}
+ .changes>div{grid-template-columns:44px minmax(0,1fr);padding-right:92px}
+ .changes>div:first-child .source-crop{width:72px;height:42.48px;right:4.32px;bottom:3.6px}
+ .changes>div:last-child .source-crop{width:51.84px;height:41.76px;right:3.6px;bottom:3.6px}
+ .changes li:before{left:-13px;top:.6em;border-top-width:3.6px;border-bottom-width:3.6px;border-left-width:5.76px}
+ .type-illustration[src$="chara07.png"]{transform:translateX(5px)}
+ .offer h3 small{margin-bottom:3px}
+}
+@media screen and (max-width:360px){
+ .rank{grid-template-columns:28px minmax(76px,1fr) 15% 73px;gap:3px}
+ .changes>div{grid-template-columns:40px minmax(0,1fr);padding-right:80px}
+ .changes>div:first-child .source-crop{width:64px;height:37.76px;right:3.84px;bottom:3.2px}
+ .changes>div:last-child .source-crop{width:46.08px;height:37.12px;right:3.2px;bottom:3.2px}
+}
+
+.flow-text>.phrase{display:inline!important;white-space:nowrap;color:inherit!important}
+
+.changes>div:last-child{padding-right:94px}
+@media screen and (max-width:820px){.changes>div:last-child{padding-right:72px}}
+
+.focus-copy p{text-wrap:balance}
