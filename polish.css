@@ -226,7 +226,7 @@
  #app{width:194mm;height:281mm;display:flex;align-items:center;justify-content:center}
  .sheet.report{width:1191px;min-width:1191px;max-width:none;zoom:.56;margin:0!important;flex:none}
  .report-header{overflow:hidden}
- .header-vector{top:-3px;height:253px}
+ .header-vector{top:-3px;height:253px;clip-path:inset(0 0 4px 0)}
 }
 
 @media (min-width:821px),print{.actions li{padding:8px 4px;gap:4px}}
