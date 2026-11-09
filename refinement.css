@@ -1,4 +1,4 @@
-@font-face{font-family:ReportSans;src:url('assets/noto-sans-jp.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:ReportSans;src:url('assets/noto-sans-jp.woff2?v=20261110') format('woff2');font-weight:100 900;font-display:swap}
 :root{font-family:ReportSans,'Yu Gothic','Meiryo',sans-serif}.header-copy h1 span{display:inline-block}.header-sub span{display:inline-block}.rank small,.section-heading small,.focus h2,.header-copy h1 em{font-family:ReportSans,sans-serif}.footer p{font-size:13px}
 .report-header{display:grid;grid-template-columns:62% 38%;background:#233c4b;color:#fff;position:relative;min-height:253px;overflow:hidden}
 .report-header:before{content:'';position:absolute;left:0;top:0;width:88px;height:100%;background:#96233d;clip-path:polygon(0 0,100% 0,0 100%)}

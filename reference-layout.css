@@ -1,5 +1,5 @@
 /* 支給見本1191px幅を基準にした、写真・文字・装飾の寸法。 */
-@font-face{font-family:ReportSerif;src:url('assets/noto-serif-jp.woff2') format('woff2');font-weight:200 900;font-display:swap}
+@font-face{font-family:ReportSerif;src:url('assets/noto-serif-jp.woff2?v=20261110') format('woff2');font-weight:200 900;font-display:swap}
 .report{display:flex;flex-direction:column}.actions li,.changes li{text-wrap:balance}.offer-photo{position:relative}.offer-photo img,.offer-qr img{display:block;width:100%;height:auto}.offer-qr img{border:1px solid #444;padding:2px;background:#fff}.image-caption{position:absolute;bottom:0;right:0;font:700 11px/1.2 ReportSans,sans-serif;background:#ffffffc9;color:#222;white-space:nowrap}
 .report-header{display:block;min-height:283px;height:283px;flex:none;background:#223746}
 .report-header:before{width:88px;background:#94213c;z-index:0}
