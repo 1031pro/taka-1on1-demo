@@ -9,7 +9,7 @@ const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const crop=(x,y,w,h,label='')=>`<svg class="source-crop" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${escapeHtml(label)}"><image href="assets/report-reference.jpg" width="1191" height="1685"/></svg>`;
 const vectorCrop=(x,y,w,h,cls='')=>`<svg class="reference-detail ${cls}" viewBox="${x} ${y} ${w} ${h}" aria-hidden="true"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg>`;
 const header=()=>`<header class="report-header"><div class="header-vector" aria-hidden="true"><svg viewBox="0 0 640 253"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg></div><div class="header-copy"><p><strong>1on1</strong>の時間、</p><h1><span>部下の「<em>本音</em>」が</span><span>見えていますか？</span></h1><p class="header-sub">あなたの1on1が変わる、<span>コミュニケーション診断レポート</span></p></div><div class="header-photo"><svg viewBox="650 0 541 283" role="img" aria-label="資料を見ながら対話する2人"><defs><clipPath id="header-photo-clip"><polygon points="746,0 1191,0 1191,283 649,283"/></clipPath></defs><image href="assets/header-photo.jpeg" x="582.6" y="-11.3" width="608.5" height="406" clip-path="url(#header-photo-clip)"/><polygon points="736,0 746,0 649,283 639,283" fill="#20658d"/><polygon points="1191,169 1191,197 1152,283 1139,283" fill="#94213c"/></svg></div></header>`;
-const nativeHeading=(n,title)=>`<h2 class="section-heading"><i>${vectorCrop(75,({'01':467,'02':752,'03':875,'04':1052,'05':1268})[n],96,48,'heading-number')}</i><span>${headingMarkup(title)}</span>${({'01':'気づかないうちに起きるすれ違い','03':'まずは答えを急がない','04':'目指したい未来','05':'目的に合った情報をお届けします'})[n]?`<small><span class="heading-cue" aria-hidden="true">»</span> ${({ '01':'気づかないうちに起きるすれ違い','03':'まずは答えを急がない','04':'目指したい未来','05':'目的に合った情報をお届けします'})[n]}</small>`:''}</h2>`;
+const nativeHeading=(n,title)=>`<h2 class="section-heading"><i>${vectorCrop(75,({'01':467,'02':752,'03':875,'04':1052,'05':1268})[n],96,48,'heading-number')}</i><span>${headingMarkup(title)}</span>${({'01':'気づかないうちに起きるすれ違い','03':'まずは答えを急がない','04':'目指したい未来','05':'目的に合った情報をお届けします'})[n]?`<small>${vectorCrop(839,489,16,16,"heading-cue")}${({ '01':'気づかないうちに起きるすれ違い','03':'まずは答えを急がない','04':'目指したい未来','05':'目的に合った情報をお届けします'})[n]}</small>`:''}</h2>`;
 const heading=(n,title)=>{if(title==='1on1コミュニケーション診断')return nativeHeading(n,title);const y=({'01':467,'02':752,'03':875,'04':1052,'05':1268})[n];return `<div class="heading-pair">${nativeHeading(n,title)}<h2 class="section-heading supplied-heading"><span class="heading-accessible">${n} ${escapeHtml(title)}</span><svg aria-hidden="true" viewBox="75 ${y} 1032 50"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg></h2></div>`;};
 const ctaCard=(kind)=>{const a=kind==='A';return `<article class="offer ${a?'offer-a':'offer-b'}"><a class="offer-vector" href="https://nlpi.jp/biztra/one-${kind.toLowerCase()}" target="_blank" rel="noopener" aria-label="${a?'管理職として学びたい方：実践シートを受け取る':'企業研修を検討したい方：資料を受け取る'}"><svg viewBox="${a?84:600} 1360 507 263"><defs><clipPath id="offer-clip-${kind}"><rect x="${a?84:600}" y="1372" width="507" height="251"/><circle cx="${a?121:637}" cy="1392" r="28"/></clipPath></defs><image href="assets/reference-vector.svg" width="1191" height="1685" clip-path="url(#offer-clip-${kind})"/></svg></a><h3><b>${kind}</b><span>${a?'管理職として学びたい方':'企業研修を検討したい方'}</span><small>${a?'無料実践シート':'無料PDF資料'}</small></h3><h4>${a?'あなたの「1on1のクセ」が変わる！':'あなたの会社の1on1、どこに課題がある？'}</h4><div class="offer-body"><div class="offer-photo"><img src="assets/source-${a?'116':'119'}.jpeg" alt="${a?'1on1質問＆実践シートのイメージ':'企業研修のイメージ'}">${a?'<small class="image-caption">※イメージ画像</small>':''}</div><div class="offer-copy"><p>${flowText(a?'7つのコミュニケーションのクセと、部下の本音を引き出す3つの実践スキルを解説する「1on1質問＆実践シート」プレゼント。':'1on1が形骸化する原因と、管理職育成の進め方を解説。診断を活用した組織改善のヒントをまとめた実践ガイドです。')}</p><div class="offer-links"><a class="offer-url" href="https://nlpi.jp/biztra/one-${kind.toLowerCase()}" target="_blank" rel="noopener">https://nlpi.jp/biztra/one-${kind.toLowerCase()}</a><a class="offer-button" href="https://nlpi.jp/biztra/one-${kind.toLowerCase()}" target="_blank" rel="noopener">${a?'シート':'資料'}を受け取る →</a><span class="offer-qr"><img src="assets/source-${a?'114':'117'}.png" alt="QRコード"></span></div></div></div></article>`;};
 function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article class="sheet">${header()}<section class="intro-content">${heading('01','1on1コミュニケーション診断').replace(/<small>.*?<\/small>/,'')}<p>${flowText(window.CONTENT.intro)}</p><button class="primary" id="start">診断をはじめる →</button></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
@@ -59,19 +59,28 @@ function phraseParts(text){
   const token=phraseLexicon.find(word=>rest.startsWith(word)) || japaneseWords.segment(rest)[Symbol.iterator]().next().value.segment;
   tokens.push(token);pos+=token.length;
  }
- // サ変動詞と活用部分を分断しない。意味上の語句は上の辞書でも保護する。
+ // 語形と後続語から結合する。文言の置換ではなく改行候補だけを制御する。
  for(let i=1;i<tokens.length;i++){
-  if(/\p{Script=Han}$/u.test(tokens[i-1]) && /^(?:する|して|し$|され|でき|しやす)/.test(tokens[i])){
-   tokens.splice(i-1,2,tokens[i-1]+tokens[i]);i--;
-  }
+  const a=tokens[i-1],b=tokens[i];
+  const sahen=/\p{Script=Han}$/u.test(a)&&/^(?:する|して|し$|され|でき|しやす)/.test(b);
+  const predicate=/(?:く|に)$/.test(a)&&/^(?:する|して|なる|なり)/.test(b);
+  const nominal=/(?:う|く|ぐ|す|つ|ぬ|ぶ|む|る|い|た|な)$/.test(a)&&(/^(?:ため|前|後|うえ|とき)/.test(b)||/^\p{Script=Han}{1,2}$/u.test(b));
+  const suffix=/^(?:られる|れる|らない|ら$|れ$)/.test(b)||(/\p{Script=Han}$/u.test(a)&&/^(?:\p{Script=Han}|さ)$/u.test(b));
+  const explanation=a==='の'&&/^(?:だ|です|では)/.test(b);
+  if(sahen||predicate||nominal||explanation||suffix){tokens.splice(i-1,2,a+b);i=Math.max(0,i-2);}
  }
  const parts=[];let opening='';
  const attach=/^(?:は|が|を|に|の|と|も|へ|で|や|から|まで|より|だけ|では|には|でも|とは|ので|のに|について|ます|ません|まし|た|て|だ|です|でし|ない|れる|られる|たい|そう|か|ね|よ|な|ながら|つつ|たり|なく|にくい|やすい|すぎ|いる|ある|なる|こと)$/;
  for(const token of tokens){
   if(/^[「『（(]+$/.test(token)){opening+=token;continue;}
   if(/^[、。！？!?」』）)……]+$/.test(token) && parts.length && !opening){parts[parts.length-1]+=token;continue;}
-  if(attach.test(token)&&parts.length&&!opening&&Array.from(parts[parts.length-1]+token).length<=10){parts[parts.length-1]+=token;continue;}
+  if((attach.test(token)||/^(?:によって|のだけれど)/.test(token))&&parts.length&&!opening&&Array.from(parts[parts.length-1]+token).length<=14){parts[parts.length-1]+=token;continue;}
   parts.push(opening+token);opening='';
+ }
+ // 活用・助詞を付けた後のまとまりも統合する。
+ for(let i=1;i<parts.length;i++){
+  const a=parts[i-1],b=parts[i];
+  if((/^に(?:する|して|なる|なり)/.test(b))||(/(?:く|に)$/.test(a)&&/^(?:する|して|なる|なり)/.test(b))||(/ことが$/.test(a)&&/^でき/.test(b))||(/\p{Script=Han}$/u.test(a)&&/^な\p{Script=Han}/u.test(b))){parts.splice(i-1,2,a+b);i=Math.max(0,i-2);}
  }
  if(opening){if(parts.length)parts[parts.length-1]+=opening;else parts.push(opening);}
  return parts;

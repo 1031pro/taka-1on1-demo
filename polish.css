@@ -230,3 +230,16 @@
 }
 
 @media (min-width:821px),print{.actions li{padding:8px 4px;gap:4px}}
+
+/* r4: 共通の改行規則、支給補足記号、読みやすい印刷縮尺。 */
+.focus-copy p,.action-copy{text-wrap:balance}
+.section-heading small{font-weight:550;display:flex;align-items:center;gap:9px}
+.section-heading .heading-cue{width:16px;height:16px;flex:none;vertical-align:baseline}
+@media screen and (max-width:820px){.section-heading small{display:none}}
+@media print{
+ .sheet.report{zoom:.61}
+ .report-header{background:#213749;clip-path:inset(1px 0 1px 0)}
+ .header-vector{top:0;height:253px;clip-path:inset(1px 0 4px 0)}
+}
+
+.question h1{text-wrap:balance}
