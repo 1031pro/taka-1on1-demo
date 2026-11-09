@@ -207,3 +207,26 @@
 @media screen and (max-width:820px){.changes>div:last-child{padding-right:72px}}
 
 .focus-copy p{text-wrap:balance}
+
+/* r3: 補足文・番号背景・文節・印刷の再レビュー対応。 */
+.section-heading small:first-letter{font-size:inherit}
+.section-heading .heading-cue{font-size:23px;font-weight:900;line-height:1;vertical-align:-1px}
+.section-heading:before{content:'';width:88px;height:88px;left:0;bottom:-38px;background:#e4eef5;border-radius:50%;z-index:-1}
+.section-heading i{height:44px;align-self:flex-end;align-items:flex-end;bottom:-1px}
+.section-heading .heading-number{width:88px;height:44px}
+.focus-copy p{text-wrap:pretty}
+@media screen and (max-width:820px){
+ .section-heading:before{width:52px;height:52px;left:0;bottom:-23px}
+ .section-heading i{height:26px;width:52px;min-width:52px;align-self:flex-end}
+ .section-heading .heading-number{width:52px;height:26px}
+}
+@media print{
+ @page{size:A4;margin:8mm}
+ html,body{margin:0!important;padding:0!important}
+ #app{width:194mm;height:280mm;display:flex;align-items:center;justify-content:center}
+ .sheet.report{width:1191px;min-width:1191px;max-width:none;zoom:.56;margin:0!important;flex:none}
+ .report-header{overflow:hidden}
+ .header-vector{top:-1px;height:254px}
+}
+
+@media (min-width:821px),print{.actions li{padding:8px 4px;gap:4px}}
