@@ -142,3 +142,18 @@
 /* 箇条書きの記号も端末フォントへの代替を避ける。 */
 .changes li{list-style:none;position:relative}
 .changes li:before{content:'';position:absolute;left:-12px;top:.65em;width:0;height:0;border-top:3px solid transparent;border-bottom:3px solid transparent;border-left:4px solid currentColor}
+
+/* 全体拡大レビュー：語尾の孤立と画像端の余白を調整。 */
+.changes>div:first-child .source-crop{width:100px;height:59px}
+.signs-copy{ text-wrap:balance }
+.action-copy{ text-wrap:pretty }
+@media screen and (max-width:820px){
+ .context,.cta>p{ text-wrap:pretty }
+ .changes>div:first-child .source-crop{width:68px;height:auto}
+}
+@media screen and (max-width:360px){
+ .changes>div:first-child .source-crop{width:56px}
+}
+
+.question h1{text-wrap:pretty}
+.intro-content>p{text-wrap:pretty}
