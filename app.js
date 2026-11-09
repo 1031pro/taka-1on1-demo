@@ -16,7 +16,7 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 const choices=[
  {label:'非常に当てはまる',value:5},{label:'やや当てはまる',value:4},
  {label:'どちらともいえない',value:3},{label:'あまり当てはまらない',value:2},
- {label:'全く当てはまらない',value:1},{label:'該当する場面がない／判断できない',value:'NA'}
+ {label:'全く当てはまらない',value:1}
 ];
 function question(){
  document.body.dataset.screen='question';
