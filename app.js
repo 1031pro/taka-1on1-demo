@@ -53,34 +53,64 @@ document.querySelector('form').onsubmit=e=>{e.preventDefault();if(document.query
 const phraseLexicon = ['「参考にしてもらえるかな」と','話す前に','相談方法','支える力','ご用意しています','良い点','見る力','伝える力','見つける力','言葉にする力','聞いたうえで','語る前に','しやすい','されすぎ','聞いて','あるのに','いないのに','相談したい','確認します','して','もらえるかな','これ以上','説明しやすく','提案しづらい','大変だった','ほしかった','大きかった','詳しく','解決策','説明し終えて','できていない','優先したり','出しづらくなる','探しやすい','しやすくなる','しづらい','安心感','注意深さ','小さく','進めやすくなる','確かめながら','生かしやすく','聞かせて','3つ','7つ','速さ','したいこと','コミュニケーション','部下の心の声','経験談','進み具合','具体的','その都度','そのくらい','難しさ','頼りになる','話し終わる','話し終えたら','話し始める','考え始める','受け止める','受け止め','話し合える','思いついた','任せた','聞かれる','聞いた','聞くと','話したい','話せる','終わりやすい','終わる','終わり','伝えやすく','伝える','加える','感じる','考えを','気持ち','気になる','気になり','少なくなる','増えやすい','しにくい','ながら','区切る','一区切り','短く','尋ねる','確かめる','できます','できる','できた','でき','あります','ありません','ある','する','します','ください','されすぎ','かも','ためではなく','十分に','うえで','もらえる','待ってみる','あってね','させてね','試せそう','優先したくなる','確認したくなる','盛ること','和ませよう','挟みたくなる','知っていてほしい','考えてきた','進めたい','答えたくなる','始めたくなる','伝えておきたい','説明したい','思われたい','ないか','一度','もう少し','学びたい','管理職','職場','実際','活用','リスク','1on1','実践シート','実践ガイド','プレゼント','したい','話す','しかし','必要','参考に','だけれど','話さなくても'].sort((a,b)=>b.length-a.length);
 const japaneseWords = new Intl.Segmenter('ja', {granularity:'word'});
 function phraseParts(text){
+ // 漢字・カタカナの語幹と後続かなを一体として取り出す。
+ // 語尾を別トークンとして切り出さない。既存の複合語辞書は境界保護だけに使う。
+ const chunks=Array.from(text.matchAll(/[\p{Script=Han}々〆]+[ぁ-ゖー]*|[ァ-ヺー]+[ぁ-ゖ]*|[A-Za-z0-9]+[ぁ-ゖ]*|[ぁ-ゖ]+|./gu));
+ const protectedRanges=[];
+ for(const word of phraseLexicon){let pos=text.indexOf(word);while(pos!==-1){protectedRanges.push([pos,pos+word.length]);pos=text.indexOf(word,pos+word.length);}}
  const tokens=[];
- for(let pos=0;pos<text.length;){
-  const rest=text.slice(pos);
-  const token=phraseLexicon.find(word=>rest.startsWith(word)) || japaneseWords.segment(rest)[Symbol.iterator]().next().value.segment;
-  tokens.push(token);pos+=token.length;
+ for(const chunk of chunks){
+  const inside=protectedRanges.some(([a,b])=>chunk.index>a&&chunk.index<b);
+  if(inside&&tokens.length)tokens[tokens.length-1]+=chunk[0];else tokens.push(chunk[0]);
  }
- // 語形と後続語から結合する。文言の置換ではなく改行候補だけを制御する。
+ // 時点を表す副詞と動詞、名詞＋助詞と後続述語は独立した句にする。
+ for(let i=0;i<tokens.length;i++){
+  const pieces=tokens[i].replace(/^(今|先|後|次)(?=\p{Script=Han}[ぁ-ゖ])/u,'$1|').split(/\||(?=その|この|どの)|(?<=に)(?=つなが)|(?<=る)(?=こと)/u);
+  if(pieces.length>1){tokens.splice(i,1,...pieces);i+=pieces.length-1;}
+ }
+ // 長いかな連続部分は助辞・補助表現の手前を改行候補にする。
+ for(let i=0;i<tokens.length;i++){
+  if(Array.from(tokens[i]).length>11){
+   const pieces=tokens[i].split(/(?=わけ|もの|ください|ほしかった|どの|いいの|では|あるのに)|(?<!たい)(?=こと)/u).filter(Boolean);
+   if(pieces.length>1){tokens.splice(i,1,...pieces);i+=pieces.length-1;}
+  }
+ }
+ // 活用・補助語を先に結合し、後続名詞に語尾を奪われないようにする。
+ for(let i=1;i<tokens.length;i++){
+  const a=tokens[i-1],b=tokens[i];
+  const ending=/^(?:やすい|にくい|づらい|られる|れる|らない|ら|れ|べ|んで|っ|め|せ|わ|た|ない)$/.test(b);
+  const sahen=/\p{Script=Han}$/u.test(a)&&/^(?:する|して|した|しない|しにく|させ|しよう|し$|され|でき|しやす)/.test(b);
+  const prefix=/^[不未非無再各全]$/.test(a)&&/^\p{Script=Han}/u.test(b);
+  const compound=/(?:い|り|き|し|み|び|ち|ぎ|え)$/.test(a)&&/^(?:\p{Script=Han}[ぁ-ゖ]+|方[にはがを]?)$/u.test(b);
+  const stem=/\p{Script=Han}$/u.test(a)&&/^[かきくけこさしすせそたちつてとなにぬねのまみむめもらりるれろ]$/.test(b)&&!/^(?:の|に|と|て)$/.test(b);
+  if((ending&&!/^[「『（(、。・]$/.test(a))||sahen||prefix||compound||stem){tokens.splice(i-1,2,a+b);i=Math.max(0,i-2);}
+ }
+ // 名詞との結合は形式名詞と短い修飾関係に限定する。
  for(let i=1;i<tokens.length;i++){
   const a=tokens[i-1],b=tokens[i];
   const sahen=/\p{Script=Han}$/u.test(a)&&/^(?:する|して|し$|され|でき|しやす)/.test(b);
   const predicate=/(?:く|に)$/.test(a)&&/^(?:する|して|なる|なり)/.test(b);
-  const nominal=/(?:う|く|ぐ|す|つ|ぬ|ぶ|む|る|い|た|な)$/.test(a)&&(/^(?:ため|前|後|うえ|とき)/.test(b)||/^\p{Script=Han}{1,2}$/u.test(b));
+  const nominal=/(?:う|く|ぐ|す|つ|ぬ|ぶ|む|る|い|た|な)$/.test(a)&&(/^(?:ため|前|後|うえ|とき|わけ)(?:に|の|では|が|は|を|と|から|まで|でも|も|で|はなく)*$/.test(b)||/^[点力人](?:に|の|が|は|を|と|だと|よりも)*$/.test(b));
+  const adjective=!/^(?:自分|相手|部下|上司)(?:の|は|が|を|に)?$/.test(b)&&/(?:い|な)$/.test(a)&&!/(?:たい|ない|やすい|にくい|づらい)$/.test(a)&&/^\p{Script=Han}{1,2}(?:は|を|が|に|の)?$/u.test(b);
   const suffix=/^(?:られる|れる|らない|ら$|れ$)/.test(b)||(/\p{Script=Han}$/u.test(a)&&/^(?:\p{Script=Han}|さ)$/u.test(b));
   const explanation=a==='の'&&/^(?:だ|です|では)/.test(b);
-  if(sahen||predicate||nominal||explanation||suffix){tokens.splice(i-1,2,a+b);i=Math.max(0,i-2);}
+  if(sahen||predicate||nominal||adjective||explanation||suffix){tokens.splice(i-1,2,a+b);i=Math.max(0,i-2);}
  }
  const parts=[];let opening='';
  const attach=/^(?:は|が|を|に|の|と|も|へ|で|や|から|まで|より|だけ|では|には|でも|とは|ので|のに|について|ます|ません|まし|た|て|だ|です|でし|ない|れる|られる|たい|そう|か|ね|よ|な|ながら|つつ|たり|なく|にくい|やすい|すぎ|いる|ある|なる|こと)$/;
  for(const token of tokens){
   if(/^[「『（(]+$/.test(token)){opening+=token;continue;}
   if(/^[、。！？!?」』）)……]+$/.test(token) && parts.length && !opening){parts[parts.length-1]+=token;continue;}
-  if((attach.test(token)||/^(?:によって|のだけれど)/.test(token))&&parts.length&&!opening&&Array.from(parts[parts.length-1]+token).length<=14){parts[parts.length-1]+=token;continue;}
+  if((attach.test(token)||/^(?:によって|のだけれど)/.test(token))&&parts.length&&!opening&&(Array.from(parts[parts.length-1]+token).length<=14||/^(?:と|は|が|を|に)$/.test(token))){parts[parts.length-1]+=token;continue;}
   parts.push(opening+token);opening='';
  }
  // 活用・助詞を付けた後のまとまりも統合する。
  for(let i=1;i<parts.length;i++){
   const a=parts[i-1],b=parts[i];
-  if((/^に(?:する|して|なる|なり)/.test(b))||(/(?:く|に)$/.test(a)&&/^(?:する|して|なる|なり)/.test(b))||(/ことが$/.test(a)&&/^でき/.test(b))||(/\p{Script=Han}$/u.test(a)&&/^な\p{Script=Han}/u.test(b))){parts.splice(i-1,2,a+b);i=Math.max(0,i-2);}
+  const shortSubject=Array.from(a+b).length<=9&&/^(?:[\p{Script=Han}]{1,2}を|\p{Script=Han}が)$/u.test(a)&&/^[\p{Script=Han}ぁ-ん]+(?:う|く|す|る|て|い|り|せ|め)/u.test(b);
+  const adjectivalSubject=/の$/.test(a)&&/^(?:多い|少ない|高い|低い|長い|短い|大きい|小さい)/.test(b);
+  const formal=/(?:の|え|め|り|し|き)$/.test(a)&&/^方[がはをにや]/.test(b);
+  if((/\p{Script=Han}を$/u.test(a)&&/^し(?:て|た|ます|ない|よう)/.test(b))||(/て$/.test(a)&&/^いて/.test(b))||shortSubject||adjectivalSubject||formal||(/^に(?:する|して|なる|なり)/.test(b))||(/(?:く|に)$/.test(a)&&/^(?:する|して|なる|なり)/.test(b))||(/ことが$/.test(a)&&/^でき/.test(b))||(/\p{Script=Han}$/u.test(a)&&/^な\p{Script=Han}/u.test(b))){parts.splice(i-1,2,a+b);i=Math.max(0,i-2);}
  }
  if(opening){if(parts.length)parts[parts.length-1]+=opening;else parts.push(opening);}
  return parts;

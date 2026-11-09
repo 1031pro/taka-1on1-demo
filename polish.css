@@ -243,3 +243,8 @@
 }
 
 .question h1{text-wrap:balance}
+
+/* r6: 長い本文は語を保ったまま両端を揃える。最終行は左揃え。 */
+@media screen and (max-width:820px){
+ .report[data-type="マイペース"] .reason{text-wrap:wrap;text-align:justify;text-justify:inter-character}
+}
