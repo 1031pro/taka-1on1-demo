@@ -274,3 +274,15 @@
 @media screen and (max-width:820px){.rank .bar{margin-right:7px}}
 .report-exception .focus h2 strong{word-break:keep-all;overflow-wrap:normal}
 @media print{#app:has(.report-exception){align-items:flex-start}}
+
+/* 04：左右の図の中心を、カード右端・下端から同じ距離にそろえる。 */
+.changes>div:last-child .source-crop{right:20px;bottom:5.5px}
+.changes>div:last-child{padding-right:109px}
+@media screen and (max-width:820px){
+ .changes>div:last-child .source-crop{right:14.4px;bottom:3.96px}
+ .changes>div:last-child{padding-right:82.8px}
+}
+@media screen and (max-width:360px){
+ .changes>div:last-child .source-crop{right:12.8px;bottom:3.52px}
+ .changes>div:last-child{padding-right:81.6px}
+}

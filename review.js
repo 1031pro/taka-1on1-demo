@@ -7,7 +7,7 @@
   {id:'all-mid',name:'全タイプが同点（50点）',totals:Array(7).fill(9)},
   {id:'all-high',name:'全タイプが同点（100点）',totals:Array(7).fill(15)}
  ]);
- const pdf=s=>'client-review-20261110/pdf/'+s.id+'.pdf';
+ const pdf=s=>'client-review-20261110/pdf/'+s.id+'.pdf?v=20261110-04-center-1';
  function show(){
   if(!unlocked)return;
   document.querySelector('.review-nav')?.remove();
