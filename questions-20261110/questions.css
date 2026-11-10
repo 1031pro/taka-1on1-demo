@@ -1,2 +1,2 @@
-.question h1{text-wrap:wrap}.question-phrase{white-space:nowrap}.question-line{display:inline}
+.question h1{text-wrap:wrap}.question-phrase{white-space:nowrap}.question-line{display:inline-block;max-width:100%;text-wrap:balance;vertical-align:top}
 @media screen and (max-width:820px){.question-line{display:block;text-wrap:balance}}
