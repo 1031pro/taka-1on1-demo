@@ -35,7 +35,7 @@ const score=values=>window.SCORING.score(values,reports);
 function rankingMarkup(valid){return `<section class="ranking"><h2>${valid.length<3?'判定できた傾向':'あなたに出やすい傾向 <span class="top-label" aria-label="TOP3">'+vectorCrop(323,267,87,31)+'</span>'}</h2>${valid.slice(0,3).map((s,i)=>`<div class="rank rank-${i}"><b aria-label="${1+valid.filter(x=>x.score>s.score).length}位">${vectorCrop(95,308+37.5*valid.filter(x=>x.score>s.score).length,37,37)}</b><strong>${s.name}</strong><div class="bar"><span style="--score:${s.display}%"></span></div><em>${s.display}<small>／100</small></em></div>`).join('')}${valid.length>3&&valid[2].score===valid[3].score?`<small>同率ほか${valid.slice(3).filter(x=>x.score===valid[2].score).length}タイプ</small>`:''}</section>`;}
 function exceptionSummary(valid,message,same){
  const title=valid.length<3?'判定保留':same?'複数傾向が同程度':'複合傾向';
- return `<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${title}</strong></h2><div class="focus-copy"><p>${flowText(message)}</p></div></section></div>`;
+ return `<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${title.replace("が","が<wbr>")}</strong></h2><div class="focus-copy"><p>${flowText(message)}</p></div></section></div>`;
 }
 function result(){
  const all=score(answers),valid=all.filter(x=>x.count===3).sort((a,b)=>b.score-a.score||a.index-b.index);
