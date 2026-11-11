@@ -18,9 +18,13 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <section class="entry-body"><p class="entry-guide"><span>次の文は、普段のあなたの1on1に</span><span>当てはまりますか？</span><span>正解・不正解はありません。</span></p>
 <button class="entry-start" id="start">診断をはじめる →</button>
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
+// All prompts share one grid cell so wrapping sets the same response position at each width.
+const promptSizers = questions.map(text =>
+  `<span class="prompt-sizer" aria-hidden="true" data-copy="${escapeHtml(text)}"></span>`
+).join('');
 function question(){
  document.body.dataset.screen='question';
- app.innerHTML=`<section class="question"><p class="diagnosis-name">1on1コミュニケーション診断</p><div class="progress">${current+1} / 21 <progress value="${current+1}" max="21"></progress></div><div class="question-body"><p class="q-number">Q${String(current+1).padStart(2,'0')}</p><h1>${escapeHtml(questions[current])}</h1><div class="binary-choices">${['Yes','No'].map(label=>`<button type="button" data-answer="${label}" aria-pressed="${answers[current]===label}"><img src="yesno-20261111/${label.toLowerCase()}-front3.png" alt="${label}" width="192" height="192"></button>`).join('')}</div><hr class="answer-rule"><p class="answer-guide">最近の部下とのやり取りを思い出し、実際の自分の行動に近い方を選んでください。</p>${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
+ app.innerHTML=`<section class="question"><p class="diagnosis-name">1on1コミュニケーション診断</p><div class="progress">${current+1} / 21 <progress value="${current+1}" max="21"></progress></div><div class="question-body"><p class="q-number">Q${String(current+1).padStart(2,'0')}</p><h1 class="prompt-slot"><span>${escapeHtml(questions[current])}</span>${promptSizers}</h1><div class="binary-choices">${['Yes','No'].map(label=>`<button type="button" data-answer="${label}" aria-pressed="${answers[current]===label}"><img src="yesno-20261111/${label.toLowerCase()}-front3.png" alt="${label}" width="192" height="192"></button>`).join('')}</div><hr class="answer-rule"><p class="answer-guide">最近の部下とのやり取りを思い出し、実際の自分の行動に近い方を選んでください。</p>${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
  app.querySelectorAll('[data-answer]').forEach(button=>button.onclick=()=>{
   if(transitioning)return;
   transitioning=true;answers[current]=button.dataset.answer;button.setAttribute('aria-pressed','true');
