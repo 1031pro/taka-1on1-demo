@@ -18,9 +18,10 @@ body[data-screen=question] .choices button{min-height:44px;white-space:normal;pa
 @media(max-width:820px){.tied-details{width:auto;margin:20px 18px}}
 @media print {.report:has(.tied-details){height:auto!important;max-height:none!important;overflow:visible!important}}
 
-.answer-guide{margin:12px 0 20px;font:400 16px/1.6 ReportSans,sans-serif;color:#405461;word-break:auto-phrase}
-.binary-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:490px;margin:0 auto}
-.binary-choices button{border:0;border-radius:14px;background:transparent;padding:0;cursor:pointer;min-height:48px}
+.answer-rule{max-width:490px;margin:18px auto 10px;border:0;border-top:1px solid #b5c4cc}
+.answer-guide{max-width:490px;margin:0 auto 12px;font:400 16px/1.6 ReportSans,sans-serif;color:#405461;word-break:auto-phrase}
+.binary-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2vw,22px);max-width:406px;margin:0 auto}
+.binary-choices button{border:0;border-radius:26%;overflow:hidden;background:transparent;padding:0;cursor:pointer;min-height:48px}
 .binary-choices img{display:block;width:100%;height:auto}
 .binary-choices button:hover,.binary-choices button[aria-pressed=true]{filter:brightness(.88)}
 .binary-choices button:focus-visible{outline:3px solid #1e3849;outline-offset:3px}
