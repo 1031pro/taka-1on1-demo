@@ -9,15 +9,18 @@ body[data-screen=question] .question h1{height:auto;text-wrap:pretty;line-height
 body[data-screen=question] .choices button{min-height:44px;white-space:normal;padding:8px 12px;height:auto;text-align:left;line-height:1.45}
 @media(max-width:640px){body[data-screen=question] .question-body{padding:12px}body[data-screen=question] .choices{gap:5px}body[data-screen=question] .choices button{font-size:15px}body[data-screen=question] .question h1{font-size:17px}}
 
-.tied-details {width:86%;margin:24px auto;color:#213a49}
-.tied-details h2 {font-size:clamp(19px,2vw,26px);margin:0}
-.tied-details article {border-top:1px solid #a8c2ce;padding:14px 0;break-inside:avoid}
-.tied-details h3 {font-size:1.2em;color:#91213b;margin:0 0 5px}
-.tied-details h4 {font-size:1em;margin:8px 0 2px}
-.tied-details p {font-size:1em;line-height:1.55;margin:0}
-@media(max-width:820px){.tied-details{width:auto;margin:20px 18px}}
-@media print {.report:has(.tied-details){height:auto!important;max-height:none!important;overflow:visible!important}}
-
+.focus-step {max-width:650px;margin:24px auto;padding:24px clamp(16px,4vw,36px);background:white;border-radius:12px;color:#213a49}
+.focus-count {margin:18px 0 6px;font-weight:700;color:#94213c}
+.focus-step h1 {margin:0 0 18px;font-size:clamp(19px,3vw,24px);line-height:1.5}
+.focus-options {display:grid;gap:7px}
+.focus-options button {text-align:left;padding:10px 14px;border:1px solid #afc3cd;border-radius:6px;background:white;color:#213a49;font:inherit;font-size:16px;line-height:1.5;min-height:44px}
+.focus-options button:is(:hover,:focus-visible) {border-color:#196384;background:#eff6fa}
+.focus-step .back {margin-top:10px}
+.focus-note {margin:8px auto;width:86%;font-size:clamp(14px,1.3vw,18px);color:#69243b;font-weight:bold}
+.common-action {width:86%;margin:16px auto;line-height:1.6}
+.common-action h2 {font-size:1.15em}
+@media(max-width:700px){.focus-step{margin:10px 12px;padding:16px}.focus-count{margin-top:10px}.focus-step h1{margin-bottom:12px}.focus-options button{padding:8px 12px}}
+.focus-options button {word-break:auto-phrase;text-wrap:pretty}
 .question-body{--answer-spacing:clamp(32px,5vw,44px)}
 .answer-rule{max-width:490px;margin:var(--answer-spacing) auto 10px;border:0;border-top:1px solid #b5c4cc}
 .answer-guide{max-width:490px;margin:0 auto 12px;font:400 16px/1.6 ReportSans,sans-serif;color:#405461;word-break:auto-phrase}

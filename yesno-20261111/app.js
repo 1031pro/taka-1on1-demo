@@ -43,24 +43,48 @@ function exceptionSummary(valid,message,title){
 
  return `<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${title.replace("が","が<wbr>")}</strong></h2><div class="focus-copy"><p>${flowText(message)}</p></div></section></div>`;
 }
-function tiedDetails(leaders){
- return `<section class="tied-details"><h2>同率1位のタイプ別の特徴と行動</h2>${leaders.map(({index})=>{
-  const {name,signs,next}=reports[index];
-  return `<article><h3>${escapeHtml(name)}</h3><p>${flowText(signs)}</p><h4>次の1on1で試せる行動</h4><p>${flowText(next)}</p></article>`;
- }).join('')}</section>`;
+const focusActions = {
+ 'しゃべりすぎ':'部下が話し終わる前に、自分の説明や経験談を始める。',
+ 'マウント':'部下の意見より、自分の経験や判断を優先する。',
+ 'ネガティブ':'部下の提案に対して、問題点や失敗のリスクを先に指摘する。',
+ 'マイペース':'部下の相談の途中で、別の用件に話を変える。',
+ '過干渉':'部下に仕事を任せても、途中で細かく確認したり口を出したりする。',
+ 'カッコつけ':'十分に確認していないことを、知っているかのように説明する。',
+ 'ドライ':'部下が悩みを話したとき、気持ちに触れず、事実や対策の話に進む。'
+};
+function chooseFocus(leaders){
+ document.body.dataset.screen='focus-choice';
+ app.innerHTML=`<section class="focus-step"><p class="diagnosis-name">1on1コミュニケーション診断</p>
+ <p class="focus-count">${leaders.length}つの傾向が同率1位でした</p>
+ <h1 tabindex="-1">次の1on1で振り返りたい行動を<br>1つ選んでください。</h1>
+ <div class="focus-options">${leaders.map(type=>`<button data-focus="${type.index}">${escapeHtml(focusActions[type.name])}</button>`).join('')}
+ <button data-focus="common">どれも同程度・判断できない</button></div>
+ <button class="back" id="back">← 前の質問</button></section>`;
+ app.querySelectorAll('[data-focus]').forEach(button=>button.onclick=()=>result(button.dataset.focus==='common'?'common':Number(button.dataset.focus)));
+ app.querySelector('#back').onclick=()=>{current=questions.length-1;question();};
+ window.scrollTo(0,0);
+ app.querySelector('h1').focus({preventScroll:true});
 }
-function result(){
+function result(selection){
  const valid=score(answers).sort((a,b)=>b.score-a.score||a.index-b.index);
  const leaders=valid.filter(type=>type.score===valid[0].score);
- const normal=leaders.length===1;
- const chosen=leaders[0];
- const r=normal?reports[chosen.index]:null;
- const title='複合傾向';
- const message=window.CONTENT.exceptions[chosen.score===0?'low':'tie'];
+ if (leaders.length > 1 && selection === undefined) {
+  chooseFocus(leaders);
+  return;
+ }
+ const chosen = leaders.length === 1 ? leaders[0] : leaders.find(type => type.index === selection);
+ const r = chosen ? reports[chosen.index] : null;
+ const normal = Boolean(r);
+ const title = '複合傾向';
+ const same = leaders.length === valid.length;
+ const key = !same ? 'tie' : valid[0].score === 0 ? 'low' : valid[0].score === 3 ? 'high' : 'same';
+ const message = window.CONTENT.exceptions[key];
  document.body.dataset.screen='result';
 app.innerHTML=`<article class="sheet report${normal?'':' report-exception'}" data-type="${r?.name||''}">${header()}${normal?`<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${r.name+'傾向'}</strong></h2><div class="focus-copy"><p>${r?strengthMarkup(r.strength):escapeHtml(message)}</p>${normal?`<img class="type-illustration" src="assets/types/chara${String(chosen.index+1).padStart(2,'0')}.png" width="400" height="400" alt="${escapeHtml(r.name)}タイプのイラスト">`:''}</div></section></div>`:exceptionSummary(valid,message,title)}
+${normal&&leaders.length>1?`<p class="focus-note">同率1位の中から、あなたが選んだ傾向は「${r.name}」です。</p>`:''}
+${!normal&&leaders.length>1?`<section class="common-action"><h2>次の1on1で試せること</h2><p>${flowText("助言の前に「ほかにもありますか？」と一度尋ねる。")}</p></section>`:''}
 ${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line])=>`<p data-who="${who}"><b>${who}</b><span>「${flowText(line)}」</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><p class="signs-copy">${flowText(r.signs)}</p></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(window.CONTENT.notice)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b>今</b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b>これから</b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}
-${leaders.length>1?tiedDetails(leaders):''}
+
 <section class="cta">${normal?heading('05','あなたの次の一歩を選んでください'):`<h2 class="exception-heading">${headingMarkup('あなたの次の一歩を選んでください')}</h2>`}<p>${flowText('この診断は「気づき」の入り口です。さらに学びたい方には、目的別の情報をご用意しています。')}</p><div class="cta-columns">${ctaCard('A')}${ctaCard('B')}</div></section><div class="result-tools"><button id="print" class="primary">結果をPDFで保存</button><button id="retry">もう一度診断する</button></div><footer class="footer"><p>${flowText('※診断は自己回答に基づくコミュニケーション傾向の目安です。部下の本音や職場の課題を断定するものではありません。')}</p><a href="https://nlpi.jp/" target="_blank" rel="noopener">株式会社アイエヌエー　https://nlpi.jp/</a></footer></article>`;
 document.querySelector('#print').onclick=()=>window.print();document.querySelector('#retry').onclick=intro;window.scrollTo(0,0);}
 app.innerHTML='<form class="gate"><h1>1on1コミュニケーション診断</h1><label>パスワード<input type="password" required autofocus></label><button class="primary">表示する</button><p role="alert"></p></form>';
