@@ -1,0 +1,10 @@
+.question h1{text-wrap:wrap}.question-phrase{white-space:nowrap}.question-line{display:inline-block;max-width:100%;text-wrap:balance;vertical-align:top}
+@media screen and (max-width:820px){.question-line{display:block;text-wrap:balance}}
+.pair-prompt,.pair-scale{font:500 15px/1.55 ReportSans,sans-serif;margin:10px 0;color:#233c4b}
+.question .choices button{height:auto;min-height:54px;text-align:left;padding:12px 16px;line-height:1.6;white-space:normal}
+.question-body h1{height:auto;min-height:0}
+.pair-scale{font-size:14px;max-width:39em}
+@media(max-width:640px){.question .choices button{font-size:16px}.pair-prompt{font-size:14px}}
+body[data-screen=question] .question h1{height:auto;text-wrap:pretty;line-height:1.45;margin:8px 0 14px}
+body[data-screen=question] .choices button{min-height:44px;white-space:normal;padding:8px 12px;height:auto;text-align:left;line-height:1.45}
+@media(max-width:640px){body[data-screen=question] .question-body{padding:12px}body[data-screen=question] .choices{gap:5px}body[data-screen=question] .choices button{font-size:15px}body[data-screen=question] .question h1{font-size:17px}}
