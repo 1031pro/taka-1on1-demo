@@ -1,0 +1,18 @@
+
+body[data-screen="intro"] {background:#edf1f3}
+body[data-screen="intro"] #app {display:grid;place-items:center;min-height:100svh;padding:24px 0}
+.entry-card {width:min(100%, max(440px, 58.6svh), 800px);container-type:inline-size;background:white;color:#223747;font-family:ReportSans,"Meiryo",sans-serif}
+.entry-banner {position:relative;isolation:isolate;background:#223747;color:white;padding:2cqw 5% 7% 13.4%;min-height:81cqw}
+.entry-banner::before,.entry-banner::after {position:absolute;inset:0;content:"";background:#92213e;z-index:-1}
+.entry-banner::before {clip-path:polygon(0 0,14% 0,0 83%)}
+.entry-banner::after {clip-path:polygon(100% 52%,100% 100%,92% 100%)}
+.entry-banner h1 {font:800 7.9cqw/1.36 ReportSerif,"Yu Mincho","Hiragino Mincho ProN",serif;margin:0}
+.entry-banner h1 span,.entry-guide span {display:block}
+.entry-banner h1 b {font:700 19.3cqw/1.18 "Times New Roman","Times New Roman",serif}
+.entry-banner h1 em {color:#e8ad13;font:900 13cqw/1.15 "Meiryo",sans-serif}
+.entry-banner p {font-size:6.2cqw;line-height:1.48;font-weight:900;margin:5.3cqw 0 0}
+.entry-body {padding:6.8cqw 0 1.8cqw}
+.entry-guide {margin:0 auto;width:86%;margin-left:10%;font-size:3.85cqw;line-height:1.85;font-weight:500}
+.entry-start {display:block;margin:10.5cqw auto 0;width:45%;min-height:max(44px,12cqw);background:#9a213e;color:white;border:0;border-radius:1.6cqw;font-size:4.1cqw;font-weight:700}
+.entry-credit {display:block;margin:10.8cqw auto 0;text-align:center;color:#757575;font:normal 3cqw/1.5 "Segoe UI",Meiryo,sans-serif}
+@media(max-width:640px){body[data-screen="intro"] #app{padding:0;background:white;place-items:start center}.entry-card{width:100%}}
