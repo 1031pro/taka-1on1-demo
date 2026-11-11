@@ -8,3 +8,12 @@
 body[data-screen=question] .question h1{height:auto;text-wrap:pretty;line-height:1.45;margin:8px 0 14px}
 body[data-screen=question] .choices button{min-height:44px;white-space:normal;padding:8px 12px;height:auto;text-align:left;line-height:1.45}
 @media(max-width:640px){body[data-screen=question] .question-body{padding:12px}body[data-screen=question] .choices{gap:5px}body[data-screen=question] .choices button{font-size:15px}body[data-screen=question] .question h1{font-size:17px}}
+
+.tied-details {width:86%;margin:24px auto;color:#213a49}
+.tied-details h2 {font-size:clamp(19px,2vw,26px);margin:0}
+.tied-details article {border-top:1px solid #a8c2ce;padding:14px 0;break-inside:avoid}
+.tied-details h3 {font-size:1.2em;color:#91213b;margin:0 0 5px}
+.tied-details h4 {font-size:1em;margin:8px 0 2px}
+.tied-details p {font-size:1em;line-height:1.55;margin:0}
+@media(max-width:820px){.tied-details{width:auto;margin:20px 18px}}
+@media print {.report:has(.tied-details){height:auto!important;max-height:none!important;overflow:visible!important}}
