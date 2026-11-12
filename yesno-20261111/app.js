@@ -67,8 +67,10 @@ function chooseFocus(leaders){
  app.querySelector('h1').focus({preventScroll:true});
 }
 function result(selection){
- const valid = score(answers).sort((a,b)=>b.score-a.score||a.index-b.index);
- const unclear = valid[0].score === 0;
+ const all = score(answers);
+ const valid = all.filter(type => type.count === 3).sort((a,b)=>b.score-a.score||a.index-b.index);
+ const pending = all.filter(type => type.count < 3);
+ const unclear = valid.length < 2 || valid[0].score === 0;
  const leaders = unclear ? [] : valid.filter(type=>type.score===valid[0].score);
  if (leaders.length > 1 && selection === undefined) {
   chooseFocus(leaders);
@@ -81,6 +83,7 @@ function result(selection){
  const message = unclear ? '今回の回答では明確な傾向は見つかりませんでした' : window.CONTENT.exceptions.tie;
  document.body.dataset.screen='result';
 app.innerHTML=`<article class="sheet report${normal?'':' report-exception'}" data-type="${r?.name||''}">${header()}${normal?`<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${r.name+'傾向'}</strong></h2><div class="focus-copy"><p>${r?strengthMarkup(r.strength):escapeHtml(message)}</p>${normal?`<img class="type-illustration" src="assets/types/chara${String(chosen.index+1).padStart(2,'0')}.png" width="400" height="400" alt="${escapeHtml(r.name)}タイプのイラスト">`:''}</div></section></div>`:exceptionSummary(valid,message,title)}
+${pending.length ? `<p class="pending-counts">判定保留（回答済みの設問数）<br>${pending.map(type=>escapeHtml(type.name)+'：'+type.count+'／3問').join('　')}</p>` : ''}
 ${normal&&leaders.length>1?`<p class="focus-note">同率1位の中から、あなたが選んだ傾向は「${r.name}」です。</p>`:''}
 ${!normal&&leaders.length>1?`<section class="common-action"><h2>次の1on1で試せること</h2><p>${flowText("助言の前に「ほかにもありますか？」と一度尋ねる。")}</p></section>`:''}
 ${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line])=>`<p data-who="${who}"><b>${who}</b><span>「${flowText(line)}」</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><p class="signs-copy">${flowText(r.signs)}</p></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(window.CONTENT.notice)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b>今</b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b>これから</b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}
