@@ -15,7 +15,7 @@ const ctaCard=(kind)=>{const a=kind==='A';return `<article class="offer ${a?'off
 function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article class="entry-card">
 <header class="entry-banner"><h1><span><b>1on1</b> の時間、</span><span>部下の「<em>本音</em>」が</span><span>見えていますか？</span></h1>
 <p>あなたの1on1が変わる、<br>コミュニケーション診断</p></header>
-<section class="entry-body"><p class="entry-guide"><span>次の文は、普段のあなたの1on1に</span><span>当てはまりますか？</span><span>正解・不正解はありません。</span></p>
+<section class="entry-body"><p class="entry-guide">過去3か月間の1on1や部下との業務相談を思い出してください。同じような場面で実際にどのように行動したかを基準にお答えください。頭の中で考えただけの場合は、「はい」にしないでください。</p>
 <button class="entry-start" id="start">診断をはじめる →</button>
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
@@ -24,7 +24,7 @@ const promptSizers = questions.map(text =>
 ).join('');
 function question(){
  document.body.dataset.screen='question';
- app.innerHTML=`<section class="question"><p class="diagnosis-name">1on1コミュニケーション診断</p><div class="progress">${current+1} / 21 <progress value="${current+1}" max="21"></progress></div><div class="question-body"><p class="q-number">Q${String(current+1).padStart(2,'0')}</p><h1 class="prompt-slot"><span>${escapeHtml(questions[current])}</span>${promptSizers}</h1><div class="binary-choices">${['Yes','No'].map(label=>`<button type="button" data-answer="${label}" aria-pressed="${answers[current]===label}"><img src="yesno-20261111/${label.toLowerCase()}-front3.png" alt="${label}" width="192" height="192"></button>`).join('')}</div><hr class="answer-rule"><p class="answer-guide">最近の部下とのやり取りを思い出し、実際の自分の行動に近い方を選んでください。</p>${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
+ app.innerHTML=`<section class="question"><p class="diagnosis-name">1on1コミュニケーション診断</p><div class="progress">${current+1} / 21 <progress value="${current+1}" max="21"></progress></div><div class="question-body"><p class="q-number">Q${String(current+1).padStart(2,'0')}</p><h1 class="prompt-slot"><span>${escapeHtml(questions[current])}</span>${promptSizers}</h1><div class="binary-choices">${['Yes','No'].map(label=>`<button type="button" data-answer="${label}" aria-pressed="${answers[current]===label}"><img src="yesno-20261111/${label.toLowerCase()}-front3.png" alt="${label==='Yes'?'はい':'いいえ'}" width="192" height="192"></button>`).join('')}<button type="button" class="missing-answer" data-answer="missing" aria-pressed="${answers[current]==='missing'}">該当する場面がなかった</button></div><hr class="answer-rule"><p class="answer-guide">「はい」：その場面の半数を超える機会で実際に行った／「いいえ」：半数以下だった／「該当する場面がなかった」：経験がなく判断できない。</p>${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
  app.querySelectorAll('[data-answer]').forEach(button=>button.onclick=()=>{
   if(transitioning)return;
   transitioning=true;answers[current]=button.dataset.answer;button.setAttribute('aria-pressed','true');
@@ -35,10 +35,11 @@ function question(){
 function score(values){
  return reports.map((report,index)=>{
   const points=report.questions.filter(n=>values[n-1]===window.CONTENT.pointAnswers[n-1]).length;
-  return {index,name:report.name,score:points,display:Math.round(points/3*100)};
+  const count=report.questions.filter(n=>['Yes','No'].includes(values[n-1])).length;
+  return {index,name:report.name,count,score:points,display:Math.round(points/3*100)};
  });
 }
-function rankingMarkup(valid){return `<section class="ranking"><h2>${valid.length<3?'判定できた傾向':'あなたに出やすい傾向 <span class="top-label" aria-label="TOP3">'+vectorCrop(323,267,87,31)+'</span>'}</h2>${valid.slice(0,3).map((s,i)=>`<div class="rank rank-${i}"><b aria-label="${1+valid.filter(x=>x.score>s.score).length}位">${vectorCrop(95,308+37.5*valid.filter(x=>x.score>s.score).length,37,37)}</b><strong>${s.name}</strong><div class="bar"><span style="--score:${s.display}%"></span></div><em>${s.display}<small>／100</small></em></div>`).join('')}${valid.length>3&&valid[2].score===valid[3].score?`<small>同率ほか${valid.slice(3).filter(x=>x.score===valid[2].score).length}タイプ</small>`:''}</section>`;}
+function rankingMarkup(valid){return `<section class="ranking"><h2>${valid.length<3?'参考順位':'あなたに出やすい傾向 <span class="top-label" aria-label="TOP3">'+vectorCrop(323,267,87,31)+'</span>'}</h2>${valid.length>=3?'<p class="rank-caption">参考順位</p>':''}${valid.slice(0,3).map((s,i)=>`<div class="rank rank-${i}"><b aria-label="${1+valid.filter(x=>x.score>s.score).length}位">${vectorCrop(95,308+37.5*valid.filter(x=>x.score>s.score).length,37,37)}</b><strong>${s.name}</strong><div class="bar"><span style="--score:${s.display}%"></span></div><em>${s.display}<small>／100</small></em></div>`).join('')}${valid.length>3&&valid[2].score===valid[3].score?`<small>同率ほか${valid.slice(3).filter(x=>x.score===valid[2].score).length}タイプ</small>`:''}</section>`;}
 function exceptionSummary(valid,message,title){
 
  return `<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${title.replace("が","が<wbr>")}</strong></h2><div class="focus-copy"><p>${flowText(message)}</p></div></section></div>`;
@@ -66,8 +67,11 @@ function chooseFocus(leaders){
  app.querySelector('h1').focus({preventScroll:true});
 }
 function result(selection){
- const valid=score(answers).sort((a,b)=>b.score-a.score||a.index-b.index);
- const leaders=valid.filter(type=>type.score===valid[0].score);
+ const all = score(answers);
+ const valid = all.filter(type => type.count === 3).sort((a,b)=>b.score-a.score||a.index-b.index);
+ const pending = all.filter(type => type.count < 3);
+ const unclear = valid.length < 2 || valid[0].score === 0;
+ const leaders = unclear ? [] : valid.filter(type=>type.score===valid[0].score);
  if (leaders.length > 1 && selection === undefined) {
   chooseFocus(leaders);
   return;
@@ -75,12 +79,11 @@ function result(selection){
  const chosen = leaders.length === 1 ? leaders[0] : leaders.find(type => type.index === selection);
  const r = chosen ? reports[chosen.index] : null;
  const normal = Boolean(r);
- const title = '複合傾向';
- const same = leaders.length === valid.length;
- const key = !same ? 'tie' : valid[0].score === 0 ? 'low' : valid[0].score === 3 ? 'high' : 'same';
- const message = window.CONTENT.exceptions[key];
+ const title = unclear ? '判定結果' : '複合傾向';
+ const message = unclear ? '今回の回答では明確な傾向は見つかりませんでした' : window.CONTENT.exceptions.tie;
  document.body.dataset.screen='result';
 app.innerHTML=`<article class="sheet report${normal?'':' report-exception'}" data-type="${r?.name||''}">${header()}${normal?`<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${r.name+'傾向'}</strong></h2><div class="focus-copy"><p>${r?strengthMarkup(r.strength):escapeHtml(message)}</p>${normal?`<img class="type-illustration" src="assets/types/chara${String(chosen.index+1).padStart(2,'0')}.png" width="400" height="400" alt="${escapeHtml(r.name)}タイプのイラスト">`:''}</div></section></div>`:exceptionSummary(valid,message,title)}
+${pending.length ? `<p class="pending-counts">判定保留（回答済みの設問数）<br>${pending.map(type=>escapeHtml(type.name)+'：'+type.count+'／3問').join('　')}</p>` : ''}
 ${normal&&leaders.length>1?`<p class="focus-note">同率1位の中から、あなたが選んだ傾向は「${r.name}」です。</p>`:''}
 ${!normal&&leaders.length>1?`<section class="common-action"><h2>次の1on1で試せること</h2><p>${flowText("助言の前に「ほかにもありますか？」と一度尋ねる。")}</p></section>`:''}
 ${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line])=>`<p data-who="${who}"><b>${who}</b><span>「${flowText(line)}」</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><p class="signs-copy">${flowText(r.signs)}</p></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(window.CONTENT.notice)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b>今</b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b>これから</b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}

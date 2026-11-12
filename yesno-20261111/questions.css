@@ -53,3 +53,35 @@ body[data-screen=question] .question-body h1{word-break:auto-phrase;margin-botto
 .prompt-slot > span {grid-area:1 / 1}
 .prompt-sizer {visibility:hidden;pointer-events:none;user-select:none}
 .prompt-sizer::before {content:attr(data-copy)}
+
+/* Anchor the circular backing to the supplied number itself. */
+.report .section-heading::before {content:none}
+.report .section-heading i {isolation:isolate;bottom:-1px}
+.report .section-heading i::before {
+  content:"";position:absolute;inset:0 0 auto;width:100%;height:auto;
+  aspect-ratio:1;border-radius:50%;background:#e4eef5;z-index:-1
+}
+.report .section-heading .heading-number {display:block;transform:translateY(1px)}
+.report .ranking .top-label {vertical-align:middle;transform:translateY(2px)}
+.report .changes ul {padding-block:5px}
+@media print {
+  .report .section-heading i {bottom:-1.5px}
+}
+
+.report .section-heading i::before {
+  height:100%;aspect-ratio:auto;border-radius:100% 100% 0 0 / 200% 200% 0 0
+}
+@media print {
+  #app:has(.sheet.report) {display:flex;align-items:flex-start;justify-content:center;height:auto}
+  .sheet.report {zoom:.56}
+}
+
+.binary-choices .missing-answer {grid-column:1/-1;border:1px solid #648494;border-radius:10px;background:#f4f8fa;color:#213749;font:600 16px/1.4 ReportSans,sans-serif;padding:10px}
+@media screen and (max-height:700px) and (max-width:640px) {
+ .question-body {--answer-spacing:32px}
+ .binary-choices {row-gap:6px}
+}
+
+.pending-counts {width:86%;margin:12px auto;line-height:1.65;color:#213749}
+
+.rank-caption {margin:0 0 5px;font-size:14px}
