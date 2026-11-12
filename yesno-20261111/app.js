@@ -36,10 +36,10 @@ function score(values){
  return reports.map((report,index)=>{
   const points=report.questions.filter(n=>values[n-1]===window.CONTENT.pointAnswers[n-1]).length;
   const count=report.questions.filter(n=>['Yes','No'].includes(values[n-1])).length;
-  return {index,name:report.name,count,score:points,display:Math.round(points/3*100)};
+  return {index,name:report.name,count,score:points};
  });
 }
-function rankingMarkup(valid){return `<section class="ranking"><h2>${valid.length<3?'参考順位':'あなたに出やすい傾向 <span class="top-label" aria-label="TOP3">'+vectorCrop(323,267,87,31)+'</span>'}</h2>${valid.length>=3?'<p class="rank-caption">参考順位</p>':''}${valid.slice(0,3).map((s,i)=>`<div class="rank rank-${i}"><b aria-label="${1+valid.filter(x=>x.score>s.score).length}位">${vectorCrop(95,308+37.5*valid.filter(x=>x.score>s.score).length,37,37)}</b><strong>${s.name}</strong><div class="bar"><span style="--score:${s.display}%"></span></div><em>${s.display}<small>／100</small></em></div>`).join('')}${valid.length>3&&valid[2].score===valid[3].score?`<small>同率ほか${valid.slice(3).filter(x=>x.score===valid[2].score).length}タイプ</small>`:''}</section>`;}
+function rankingMarkup(valid){return `<section class="ranking"><h2>${valid.length<3?'参考順位':'あなたに出やすい傾向 <span class="top-label" aria-label="TOP3">'+vectorCrop(323,267,87,31)+'</span>'}</h2>${valid.length>=3?'<p class="rank-caption">参考順位</p>':''}${valid.slice(0,3).map((s,i)=>`<div class="rank rank-${i}"><b aria-label="${1+valid.filter(x=>x.score>s.score).length}位">${vectorCrop(95,308+37.5*valid.filter(x=>x.score>s.score).length,37,37)}</b><strong>${s.name}</strong><div class="bar"><span style="--score:${s.score/3*100}%"></span></div><em>${s.score}<small>／3</small></em></div>`).join('')}${valid.length>3&&valid[2].score===valid[3].score?`<small>同率ほか${valid.slice(3).filter(x=>x.score===valid[2].score).length}タイプ</small>`:''}</section>`;}
 function exceptionSummary(valid,message,title){
 
  return `<div class="summary">${rankingMarkup(valid)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${title.replace("が","が<wbr>")}</strong></h2><div class="focus-copy"><p>${flowText(message)}</p></div></section></div>`;
@@ -57,7 +57,7 @@ function chooseFocus(leaders){
  document.body.dataset.screen='focus-choice';
  app.innerHTML=`<section class="focus-step"><p class="diagnosis-name">1on1コミュニケーション診断</p>
  <p class="focus-count">${leaders.length}つの傾向が同率1位でした</p>
- <h1 tabindex="-1">次の1on1で振り返りたい行動を<br>1つ選んでください。</h1>
+ <h1 tabindex="-1">今回見直したい傾向を1つ選んでください。</h1>
  <div class="focus-options">${leaders.map(type=>`<button data-focus="${type.index}">${escapeHtml(focusActions[type.name])}</button>`).join('')}
  <button data-focus="common">どれも同程度・判断できない</button></div>
  <button class="back" id="back">← 前の質問</button></section>`;
