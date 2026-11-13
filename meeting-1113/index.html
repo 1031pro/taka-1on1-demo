@@ -14,6 +14,8 @@ html,body{overflow:hidden}
 @media(min-width:700px){
  iframe{position:absolute;left:50%;top:0;width:390px;height:calc(100% / var(--scale,1));margin-left:-195px;transform:scale(var(--scale,1));transform-origin:top center}
 }
+iframe.result-view{position:static;width:100%;max-width:none;height:100%;margin:0;transform:none}
+iframe.printing-report{width:1440px}
 </style>
 <script>
 function sizeDesktopView(){
@@ -25,6 +27,6 @@ window.addEventListener("resize",sizeDesktopView);
 </script>
 </head>
 <body>
-<iframe src="screen.html?v=tieheading1113" title="1on1コミュニケーション診断"></iframe>
+<iframe src="screen.html?v=device-report1113" title="1on1コミュニケーション診断"></iframe>
 </body>
 </html>

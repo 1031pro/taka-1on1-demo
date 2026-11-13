@@ -211,3 +211,4 @@ body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-br
 @media(max-width:400px){.prompt-slot .prompt-thirteen{font-size:clamp(14px,4vw,15px)}}
 
 @media(min-width:900px){.report .report-content section:last-child .next .flow-text{display:block;text-wrap:balance}}
+@media print { html { -webkit-text-size-adjust: none; text-size-adjust: none; } }
