@@ -172,3 +172,7 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 @media(min-width:821px){.report .actions li{padding-right:12px}}
 
 .guide-row details::details-content{display:contents}.guide-row details[open]::details-content{display:block;grid-column:1/-1;width:100%}.guide-row details[open] .answer-guide{width:100%}
+
+.guide-row details:not([open]) .answer-guide{display:none!important}
+.question #back{margin-top:12px}
+.report-exception .summary:not(:has(.ranking)){min-height:0;height:auto;padding-block:12px}
