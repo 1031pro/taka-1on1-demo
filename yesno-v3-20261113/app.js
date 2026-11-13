@@ -184,10 +184,11 @@ function guardedCopy(text){
   const segmenter=guardedCopy.segmenter ||= new Intl.Segmenter('ja',{granularity:'word'});
   let pos=0;for(const item of segmenter.segment(String(text))){const n=Array.from(item.segment).length;
    if(item.isWordLike&&n<=7)for(let i=pos;i<pos+n-1;i++)join.add(i);
+   if(pos>0&&/^(?:を|に|は|が|の|で|と|も|へ|から|まで|より|られる|れる)$/.test(item.segment))join.add(pos-1);
    pos+=n;
   }
  }
- for(const match of String(text).matchAll(/事務的|ような発言|尋ねることが|提案しても|ことが多い|リスクを|そんなことも|『一言だけで|『自分の苦労|ことがあってね|説明し終えて|いないのに|ください|ありますか|聞いて|反応が|話さなくても|終わりやすい|試せそう|心配されすぎ|何度も|相談しやすく|注意深さは|1on1質問|判断を|確認日|最中でも|強調して|わかりました|どうなった|『間を|好きだな|という態度|発言が|ここが違う|うなずき|変わらない|話し続けて|その場を|生かしやすく|聞いてほしかった|聞かせて|確かめずに|管理職育成|学びたい|経験談|優先する|リスク|変える|知っている|触れず/gu)){
+ for(const match of String(text).matchAll(/答えられる|聞かせてください|経験を|事務的|ような発言|尋ねることが|提案しても|ことが多い|リスクを|そんなことも|『一言だけで|『自分の苦労|ことがあってね|説明し終えて|いないのに|ください|ありますか|聞いて|反応が|話さなくても|終わりやすい|試せそう|心配されすぎ|何度も|相談しやすく|注意深さは|1on1質問|判断を|確認日|最中でも|強調して|わかりました|どうなった|『間を|好きだな|という態度|発言が|ここが違う|うなずき|変わらない|話し続けて|その場を|生かしやすく|聞いてほしかった|聞かせて|確かめずに|管理職育成|学びたい|経験談|優先する|リスク|変える|知っている|触れず/gu)){
   for(let i=match.index;i<match.index+match[0].length-1;i++)join.add(i);
  }
  chars.forEach((c,i)=>{if(open.test(c))join.add(i);if(close.test(c)&&i)join.add(i-1);});
