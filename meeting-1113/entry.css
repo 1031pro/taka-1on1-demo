@@ -24,3 +24,5 @@ body[data-screen="intro"] #app {display:grid;place-items:center;min-height:100sv
 @media(max-width:640px){body[data-screen="intro"] #app{padding:0;background:white;place-items:start center}.entry-card{width:100%}}
 
 .entry-guide {width:84%;margin-inline:auto}
+
+.entry-guide p .flow-text{display:inline}.entry-guide p .break-guard{display:inline-block;white-space:nowrap}
