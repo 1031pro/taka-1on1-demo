@@ -191,3 +191,5 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 }
 
 .report .reader-note{display:block;white-space:nowrap}.report .signs ul.signs-copy{margin:0;padding-inline-start:1.3em;list-style:disc}.report .rank em{white-space:nowrap}
+
+.prompt-unit{display:inline-block;max-width:100%;line-break:strict;word-break:normal}

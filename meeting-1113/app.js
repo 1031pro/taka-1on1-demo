@@ -22,13 +22,21 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <p class="entry-hint">回答は一問ずつ進みます</p></div>
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
+const promptBreaks = [[12, 2, 11, 6], [14, 11, 9, 6], [12, 11, 8, 12, 6], [12, 15, 13, 6], [14, 7, 14, 14, 9], [17, 7, 13, 12, 6], [6, 15, 11, 7, 13, 6], [13, 7, 10, 6], [11, 8, 8, 6], [15, 17, 9, 8, 6], [13, 17, 13, 6], [12, 18, 17, 6], [15, 6, 18, 7, 14, 6], [8, 11, 17, 4, 16, 6], [12, 12, 8, 13, 6], [11, 9, 14, 6], [12, 12, 10, 8, 6], [10, 10, 10, 16, 6], [10, 12, 16, 6], [18, 13, 6], [18, 16, 4, 13, 13, 6]];
 function promptMarkup(text){
- if(text.includes("『繰り返し』尋ねる")) return text.split("『繰り返し』尋ねる").map(guardedCopy).join('<span class="break-guard"><strong>『繰り返し』</strong>尋ねる</span>');
- return text.split(/(『[^』]+』)/g) .map((part,i,parts)=>{
-  if(part.startsWith('『'))return '<strong>'+guardedCopy(part)+'</strong>';
-  const html=guardedCopy(part);
-  return part.endsWith('、')&&parts[i+1]?.startsWith('『')?html.replace(/、(?=(?:<\/span>)*$)/,'<span class="tight-comma">、</span>'):html;
- }).join('');
+ const sizes = promptBreaks[questions.indexOf(text)];
+ if(!sizes || sizes.reduce((a,b)=>a+b,0)!==text.length) return escapeHtml(text);
+ let offset=0, bold=false;
+ return sizes.map(size=>{
+  const chunk=text.slice(offset,offset+=size);
+  const html=chunk.split(/([『』])/).map(part=>{
+   if(part==='『') bold=true;
+   const value=bold?'<strong>'+escapeHtml(part)+'</strong>':escapeHtml(part);
+   if(part==='』') bold=false;
+   return value;
+  }).join('');
+  return '<span class="prompt-unit">'+html+'</span>';
+ }).join('<wbr>');
 }
 const promptSizers = questions.map(text =>
   '<span class="prompt-sizer" aria-hidden="true">'+promptMarkup(text)+'</span>'
