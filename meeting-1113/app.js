@@ -51,17 +51,16 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
 const promptSegmenter = typeof Intl.Segmenter==='function' ? new Intl.Segmenter('ja',{granularity:'word'}) : null;
-// Separate the situation from the behavior on narrow question cards.
-const mobileBehaviorStarts = new Map([
- [1,'つい『'], [3,'『'], [8,'『'], [9,'『'], [14,'『'], [15,'『'], [16,'『'], [17,'『'], [18,'『'], [19,'『'], [20,'『'], [21,'『']
-]);
+// 各設問で改行する読点の順番（引用内の読点も数える）。
+const questionBreakComma = [1,2,2,2,2,3,2,1,1,2,1,2,2,2,2,1,2,1,2,1,2];
 function promptMarkup(text){
- const start=mobileBehaviorStarts.get(questions.indexOf(text)+1);
- if(start){
-  const split=text.indexOf(start);
-  return promptMarkup(text.slice(0,split))+'<br class="mobile-behavior-break">'+promptMarkup(text.slice(split));
+ const ordinal=questionBreakComma[questions.indexOf(text)];
+ if(ordinal){
+  const comma=Array.from(text.matchAll(/、/gu))[ordinal-1];
+  const split=comma.index+1;
+  return promptMarkup(text.slice(0,split))+'<br class="question-comma-break">'+promptMarkup(text.slice(split));
  }
- const protectedWords=/(向こうの幹部とも|話が通じるから」などと、|急に別の話題に変える|自分はうなずきや相づち|表情もほとんど変わらない|私はこっちのやり方が好きだな|私の若い頃はもっと大変だったよ|この考え方はかなり高度だから|仕事の重要性|自分が話し続けてしまう|できた点より先に課題を指摘する|知っていて当然という態度で返す|自分の好みで決めてしまう|確認日よりも前に|そんなことも知らないの？|うなずきや相づち|つい冗談を挟んでしまう|内容の難しさを強調して|その場を取り繕ってしまう|自分の苦労と比べてしまう|仕事の進め方|できた点|押し通してしまう|話し続けてしまう|確認する|若い頃|ような発言が多い。|ここが違う|知らない|無理だ|聞いてしまう|持ち出して|取り繕ってしまう|長くなる|必要以上に|細かく|否定してしまう|例の資料どうなった？|ことが多い。|一言だけで|会話を終える|自分の苦労|わかりました|提案しても|好きだな|確認日|うなずき|どうなった|事務的|話し続けて|話し始める|変わらない|ような|そんなことも|その場を|言いにくそうに)/gu;
+ const protectedWords=/(向こうの幹部とも|話が通じるから」などと、|急に別の話題に変える|自分はうなずきや相づち|表情もほとんど変わらない|私はこっちのやり方が好きだな|私の若い頃は|もっと大変だったよ」などと、|この考え方はかなり高度だから|仕事の重要性|自分が話し続けてしまう|できた点より先に課題を指摘する|知っていて当然という態度で返す|自分の好みで決めてしまう|確認日よりも前に|そんなことも知らないの？|うなずきや相づち|つい冗談を挟んでしまう|内容の難しさを強調して|その場を取り繕ってしまう|自分の苦労と比べてしまう|仕事の進め方|できた点|押し通してしまう|話し続けてしまう|確認する|若い頃|ような発言が多い。|ここが違う|知らない|無理だ|聞いてしまう|持ち出して|取り繕ってしまう|長くなる|必要以上に|細かく|否定してしまう|例の資料どうなった？|ことが多い。|一言だけで|会話を終える|自分の苦労|わかりました|提案しても|好きだな|確認日|うなずき|どうなった|事務的|話し続けて|話し始める|変わらない|ような|そんなことも|その場を|言いにくそうに)/gu;
  const tokens=text.split(protectedWords).flatMap((part,i)=>i%2?[part]:promptSegmenter?Array.from(promptSegmenter.segment(part),v=>v.segment):Array.from(part));
  const units=[];
  let opening='';
@@ -72,10 +71,6 @@ function promptMarkup(text){
   opening='';
  }
  if(opening) units.push(opening);
- if(text===questions[12]){
-  const phrases=['部下が「この方法で進めたい」と提案しても、','「私はこっちのやり方が好きだな」と、','仕事の進め方を、','『自分の好みで決めてしまう』','ことが多い。'];
-  if(phrases.join('')===text)units.splice(0,units.length,...phrases);
- }
  let bold=false;
  let offset=0;
  return units.map(unit=>{
@@ -89,8 +84,7 @@ function promptMarkup(text){
    if(char==='』') bold=false;
    return value;
   }).join('').replaceAll('</strong><strong>','');
-  const lineBreak=text===questions[12] && unit==='仕事の進め方を、' ? '<br class="mobile-behavior-break">' : '';
-  return lineBreak+'<span class="keep">'+html+'</span>';
+  return '<span class="keep">'+html+'</span>';
  }).join('<wbr>');
 }
 const promptSizers = questions.map(text =>
