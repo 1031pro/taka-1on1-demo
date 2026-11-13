@@ -23,7 +23,7 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
 function promptMarkup(text){
- return escapeHtml(text).replace(/『[^』]+』/g, phrase=>'<strong>'+phrase+'</strong>');
+ return text.split(/(『[^』]+』)/g).map(s=>s.startsWith('『')?'<strong>'+guardedCopy(s)+'</strong>':guardedCopy(s)).join('');
 }
 const promptSizers = questions.map(text =>
   '<span class="prompt-sizer" aria-hidden="true">'+promptMarkup(text)+'</span>'
@@ -101,7 +101,7 @@ app.innerHTML=`<article class="sheet report${normal?'':' report-exception'}" dat
 ${pending.length ? `<p class="pending-counts">判定保留（回答済みの設問数）<br>${pending.map(type=>escapeHtml(type.name)+'：'+type.count+'／3問').join('　')}</p>` : ''}
 ${normal&&leaders.length>1?`<p class="focus-note">同率1位の中から、あなたが選んだ傾向は「${r.name}」です。</p>`:''}
 ${!normal&&leaders.length>1?`<section class="common-action"><h2>次の1on1で試せること</h2><p>${flowText("助言の前に「ほかにもありますか？」と一度尋ねる。")}</p></section>`:''}
-${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line])=>`<p data-who="${who}"><b>${who}</b><span>「${flowText(line)}」</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><p class="signs-copy">${flowText(r.signs)}</p></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(window.CONTENT.notice)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b>今</b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b>これから</b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}
+${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line])=>`<p data-who="${who}"><b>${who}</b><span>「${flowText(line)}」</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><p class="signs-copy">${flowText(r.signs)}</p></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(window.CONTENT.notice)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b><span>今</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b><span>これから</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}
 
 <section class="cta">${normal?heading('05','あなたの次の一歩を選んでください'):`<h2 class="exception-heading">${headingMarkup('あなたの次の一歩を選んでください')}</h2>`}<p>${flowText('この診断は「気づき」の入り口です。さらに学びたい方には、目的別の情報をご用意しています。')}</p><div class="cta-columns">${ctaCard('A')}${ctaCard('B')}</div></section><div class="result-tools"><button id="print" class="primary">結果をPDFで保存</button><button id="retry">もう一度診断する</button></div><footer class="footer"><p>${flowText('※診断は自己回答に基づくコミュニケーション傾向の目安です。部下の本音や職場の課題を断定するものではありません。')}</p><a href="https://nlpi.jp/" target="_blank" rel="noopener">株式会社アイエヌエー　https://nlpi.jp/</a></footer></article>`;
 document.querySelector('#print').onclick=()=>window.print();document.querySelector('#retry').onclick=intro;window.scrollTo(0,0);}
@@ -177,7 +177,23 @@ function phraseParts(text){
  if(opening){if(parts.length)parts[parts.length-1]+=opening;else parts.push(opening);}
  return parts;
 }
-function flowText(text){return '<span class="flow-text">'+phraseParts(String(text)).map(p=>'<span class="phrase">'+escapeHtml(p)+'</span>').join('<wbr>')+'</span>';}
+// Keep opening marks with the next character, closing marks with their word,
+ // and the last few characters together even in engines with different Japanese wrapping.
+function guardedCopy(text){
+ const chars=Array.from(String(text)), join=new Set(), open=/^[「『（【]$/u, close=/^[、。！？?!」』）】…ぁぃぅぇぉっゃゅょー]$/u;
+ if(typeof Intl.Segmenter==='function'){
+  const segmenter=guardedCopy.segmenter ||= new Intl.Segmenter('ja',{granularity:'word'});
+  let pos=0;for(const item of segmenter.segment(String(text))){const n=Array.from(item.segment).length;
+   if(item.isWordLike&&n<=7)for(let i=pos;i<pos+n-1;i++)join.add(i);
+   pos+=n;
+  }
+ }
+ chars.forEach((c,i)=>{if(open.test(c))join.add(i);if(close.test(c)&&i)join.add(i-1);});
+ for(let i=Math.max(0,chars.length-4);i<chars.length-1;i++)join.add(i);
+ let parts=[],part='';chars.forEach((c,i)=>{part+=c;if(!join.has(i)){parts.push(part);part='';}});if(part)parts.push(part);
+ return parts.map(x=>Array.from(x).length>1?'<span class="break-guard">'+escapeHtml(x)+'</span>':escapeHtml(x)).join('');
+}
+function flowText(text){return '<span class="flow-text"><span class="mobile-flow">'+guardedCopy(text)+'</span>'+phraseParts(String(text)).map(p=>'<span class="phrase">'+escapeHtml(p)+'</span>').join('<wbr>')+'</span>';}
 function headingMarkup(text){
  const parts={
   'こんな1on1、心当たりはありませんか？':['こんな1on1、','心当たりは','ありませんか？'],
