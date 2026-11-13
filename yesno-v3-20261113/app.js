@@ -22,42 +22,9 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <p class="entry-hint">回答は一問ずつ進みます</p></div>
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
-const promptLines = [
- "部下から相談を受けると、|つい『自分の話が長くなる』ことが多い。",
- "「あの件、どうなった？」と、|決めた確認日よりも前に|『繰り返し』尋ねることが多い。",
- "部下が新しい案を出すと、|「失敗したときのことは考えている？」と|『リスクを先に確認する』ことが多い。",
- "部下から報告を受けると、|「わかりました」「了解」など、|『一言だけで会話を終える』ことが多い。",
- "部下が仕事の大変さを話すと、|「私の若い頃はもっと大変だったよ」|などと、『自分の苦労と比べてしまう』|ような発言が多い。",
- "部下が深刻な相談をしている途中で、|「そういえば、例の資料どうなった？」|と、『急に別の話題に変える』ことが多い。",
- "「この案件、会社の命運が|かかっているくらい重要なんだよ」などと、|仕事の重要性を『必要以上に|大きく伝える』ことが多い。",
- "部下が考えて黙っていると、|『間を空けずに|自分から話し始める』ことが多い。",
- "部下に仕事を任せても、|『手順や順番まで|細かく指示する』ことが多い。",
- "部下から成果の報告を受けると、|「ここが違う」「まだ足りない」と、|『できた点より先に|課題を指摘する』ことが多い。",
- "部下が熱心に話していても、|『自分はうなずきや相づちが少なく、|表情もほとんど変わらない』ことが多い。",
- "部下から質問を受けると、|「そんなことも知らないの？」などと、|『知っていて当然という態度で|返す』ことが多い。",
- "部下が「この方法で進めたい」と|提案しても、|「私はこっちのやり方が好きだな」と、|仕事の進め方を『自分の好みで|決めてしまう』ことが多い。",
- "取引先の担当者と少し話しただけなのに、|「向こうの幹部とも|話が通じるから」などと、|『取引先との関係を|大きく見せる』ことが多い。",
- "自分の説明に夢中になり、|部下の相づちなどの反応が少なくなっても、|『自分が話し続けてしまう』ことが多い。",
- "部下に仕事を任せても、|気になる点があると|『その都度口を出してしまう』ことが多い。",
- "部下から提案を受けると、|「難しい」「無理だ」と、|『十分に検討する前に|否定してしまう』ことが多い。",
- "部下が言いにくそうに|相談を切り出しても、|『気持ちを確かめず、用件だけを|事務的に聞いてしまう』ことが多い。",
- "部下と意見が違うと、|役職や実績を持ち出して、|『自分の考えを|押し通してしまう』ことが多い。",
- "部下が深刻な相談をしている最中でも、|『つい冗談を挟んでしまう』ことが多い。",
- "自分の説明が部下に十分伝わらないと、|「この考え方はかなり高度だから」などと、|『内容の難しさを強調して、|その場を取り繕ってしまう』ことが多い。"
-];
 function promptMarkup(text){
- const lines=promptLines[questions.indexOf(text)]?.split('|');
- if(!lines || lines.join('')!==text) return escapeHtml(text);
- let bold=false;
- return lines.map(chunk=>{
-  const html=chunk.split(/([『』])/).map(part=>{
-   if(part==='『') bold=true;
-   const value=bold?'<strong>'+escapeHtml(part)+'</strong>':escapeHtml(part);
-   if(part==='』') bold=false;
-   return value;
-  }).join('');
-  return '<span class="prompt-unit">'+html+'</span>';
- }).join('<wbr>');
+ const html=escapeHtml(text).replace(/確認日|「わかりました」|終える|尋ねる|事務的|ような|話し始める|ことが多い。/gu, word=>'<span class="keep">'+word+'</span>');
+ return html.replace(/『[^』]+』/gu, quote=>'<strong>'+quote+'</strong>');
 }
 const promptSizers = questions.map(text =>
   '<span class="prompt-sizer" aria-hidden="true">'+promptMarkup(text)+'</span>'
