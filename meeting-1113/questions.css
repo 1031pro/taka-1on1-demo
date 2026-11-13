@@ -203,3 +203,5 @@ body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-br
 .prompt-slot { font-feature-settings: "chws" 1; }
 
 .prompt-slot .tight-open { display: inline-block; width: .67em; text-indent: -.33em; }
+
+.flat-question, .focus-step { touch-action: manipulation; }

@@ -1,6 +1,34 @@
 /* 表示原稿は受領資料から抽出。回答はメモリ上のみ保持する。 */
 const {questions,reports}=window.CONTENT;
 const app=document.querySelector('#app');
+const closingByType = {
+  "しゃべりすぎ": "助言する前にひと呼吸待つと、部下が自分の考えを最後まで話せる時間が生まれます。",
+  "マウント": "「どんな工夫をしたの？」と先に聞くと、部下が自分なりに考えて選んだ理由を話しやすくなります。",
+  "ネガティブ": "「どんな条件なら試せそう？」と聞くと、部下の提案を小さく試す方法を一緒に考えられます。",
+  "マイペース": "話題を変える前に「この話はここまでで大丈夫？」と聞くと、部下がまだ気になっていることを話せます。",
+  "過干渉": "任せる範囲と次の確認日を一緒に決めると、部下はそこまで自分の判断で進めやすくなります。",
+  "カッコつけ": "わからないことを「確認します」と伝えると、部下も疑問を口にでき、一緒に事実を確かめられます。",
+  "ドライ": "「不安に感じているんですね」と受け止めると、部下は何に困っているのか、その背景まで話しやすくなります。"
+};
+
+// Keep a rapid series of touches on one answer, even across the screen change.
+const repeatTouchMs = 450;
+let lastAnswerTouch = -Infinity;
+let touchSequence = false;
+app.addEventListener('pointerdown', event => {
+  touchSequence = event.pointerType === 'touch';
+}, true);
+app.addEventListener('click', event => {
+  if (!touchSequence || event.detail === 0) return;
+  const now = performance.now();
+  const repeated = now - lastAnswerTouch < repeatTouchMs;
+  if (repeated || event.target.closest('[data-answer]')) lastAnswerTouch = now;
+  if (repeated) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+}, true);
+
 // 支給原稿を一字も変えず、主文と補足の切れ目だけを指定する。
 function actionMarkup(text){return `<span class="action-copy">${flowText(text)}</span>`;}
 function strengthMarkup(text){return flowText(text);}
@@ -126,7 +154,7 @@ function result(selection){
 app.innerHTML=`<article class="sheet report${normal?'':' report-exception'}" data-type="${r?.name||''}">${header()}${normal?`<div class="summary">${rankingMarkup(shown)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${r.name+'傾向'}</strong></h2><div class="focus-copy"><p>${r?strengthMarkup(r.strength):escapeHtml(message)}</p>${normal?`<img class="type-illustration" src="assets/types/chara${String(chosen.index+1).padStart(2,'0')}.png" width="400" height="400" alt="${escapeHtml(r.name)}タイプのイラスト">`:''}</div></section></div>`:exceptionSummary(valid,message,title)}
 ${normal&&leaders.length>1?`<p class="focus-note">同率1位の中から、あなたが選んだ傾向は<span class="keep">「${r.name}」です。</span></p>`:''}
 ${!normal&&leaders.length>1?`<section class="common-action"><h2>次の1on1で試せること</h2><ul>${leaders.map(type=>`<li>${flowText(reports[type.index].actions[0])}</li>`).join('')}</ul></section>`:''}
-${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line,note])=>`<p data-who="${who}"><b>${who}</b><span>${flowText('「'+line+'」')}${note ? '<span class="reader-note">'+guardedCopy(note)+'</span>' : ''}</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><ul class="signs-copy">${r.examples.map(item=>`<li>${flowText(item)}</li>`).join('')}</ul></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(r.signs)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b><span>今</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b><span>これから</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}
+${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line,note])=>`<p data-who="${who}"><b>${who}</b><span>${flowText('「'+line+'」')}${note ? '<span class="reader-note">'+guardedCopy(note)+'</span>' : ''}</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><ul class="signs-copy">${r.examples.map(item=>`<li>${flowText(item)}</li>`).join('')}</ul></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(r.signs)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b><span>今</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b><span>これから</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(closingByType[r.name])}</span></p></section></div>`:''}
 
 <section class="cta">${normal?heading('05','あなたの次の一歩を選んでください'):`<h2 class="exception-heading">${headingMarkup('あなたの次の一歩を選んでください')}</h2>`}<p>${flowText('この診断は「気づき」の入り口です。さらに学びたい方には、目的別の情報をご用意しています。')}</p><div class="cta-columns">${ctaCard('A')}${ctaCard('B')}</div></section><div class="result-tools"><button id="print" class="primary">結果をPDFで保存</button><button id="retry">もう一度診断する</button></div><footer class="footer"><p>${flowText('※診断は自己回答に基づくコミュニケーション傾向の目安です。部下の本音や職場の課題を断定するものではありません。')}</p><a href="https://nlpi.jp/" target="_blank" rel="noopener">株式会社アイエヌエー　https://nlpi.jp/</a></footer></article>`;
 document.querySelectorAll('.voice .flow-text,.dialogue .flow-text').forEach(block=>{
