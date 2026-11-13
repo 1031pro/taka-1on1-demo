@@ -22,9 +22,29 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <p class="entry-hint">回答は一問ずつ進みます</p></div>
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
+const promptSegmenter = typeof Intl.Segmenter==='function' ? new Intl.Segmenter('ja',{granularity:'word'}) : null;
 function promptMarkup(text){
- const html=escapeHtml(text).replace(/確認日|「わかりました」|終える|尋ねる|事務的|ような|話し始める|ことが多い。/gu, word=>'<span class="keep">'+word+'</span>');
- return html.replace(/『[^』]+』/gu, quote=>'<strong>'+quote+'</strong>');
+ const protectedWords=/(一言だけで|会話を終える|自分の苦労|わかりました|提案しても|好きだな|確認日|うなずき|どうなった|事務的|話し続けて|話し始める|変わらない|ような|そんなことも|その場を|言いにくそうに)/gu;
+ const tokens=text.split(protectedWords).flatMap((part,i)=>i%2?[part]:promptSegmenter?Array.from(promptSegmenter.segment(part),v=>v.segment):Array.from(part));
+ const units=[];
+ let opening='';
+ for(const token of tokens){
+  if(/^[「『（]+$/u.test(token)){opening+=token;continue;}
+  if(!opening && units.length && (/^[。、？！？」』）…]+$/u.test(token) || /^(を|は|が|に|へ|も|の|と|で)$/u.test(token))) units[units.length-1]+=token;
+  else units.push(opening+token);
+  opening='';
+ }
+ if(opening) units.push(opening);
+ let bold=false;
+ return units.map(unit=>{
+  const html=Array.from(unit,char=>{
+   if(char==='『') bold=true;
+   const value=bold?'<strong>'+escapeHtml(char)+'</strong>':escapeHtml(char);
+   if(char==='』') bold=false;
+   return value;
+  }).join('').replaceAll('</strong><strong>','');
+  return '<span class="keep">'+html+'</span>';
+ }).join('<wbr>');
 }
 const promptSizers = questions.map(text =>
   '<span class="prompt-sizer" aria-hidden="true">'+promptMarkup(text)+'</span>'
