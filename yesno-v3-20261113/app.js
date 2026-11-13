@@ -134,7 +134,7 @@ function chooseFocus(leaders){
  document.body.dataset.screen='focus-choice';
  app.innerHTML=`<section class="focus-step"><p class="diagnosis-name">1on1コミュニケーション診断</p>
  <p class="focus-count">${leaders.length}つの傾向が同率1位でした</p>
- <h1 tabindex="-1">今回見直したい傾向を<span class="keep">1つ選んでください。</span></h1>
+ <h1 tabindex="-1">以下から、もっとも気になる傾向を<span class="keep">１つ選んでください。</span></h1>
  <div class="focus-options">${leaders.map(type=>`<button data-focus="${type.index}">${guardedCopy(focusActions[type.name])}</button>`).join('')}
  <button data-focus="common">どれも同程度・判断できない</button></div>
  <button class="back" id="back">← 前の質問</button></section>`;
