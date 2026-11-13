@@ -130,3 +130,8 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
   .report .context .flow-text {word-break:normal;text-wrap:pretty}
   .report .context .phrase {white-space:normal}
 }
+
+@media screen and (max-width:820px) {
+  .report .next {align-items:center}
+  .report .next-icon {margin-top:0}
+}
