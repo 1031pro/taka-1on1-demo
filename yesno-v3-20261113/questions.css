@@ -86,14 +86,12 @@ body[data-screen=question] .question-body h1{word-break:auto-phrase;margin-botto
 
 .rank-caption {margin:0 0 5px;font-size:14px}
 
-@media print {
-  .report .section-heading:not(.supplied-heading) {border-bottom-color:transparent}
-  .report .section-heading:not(.supplied-heading)::after {
-    content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
-    background:#477fa4;z-index:2
-  }
-  .report .section-heading i {bottom:-1px;overflow:hidden}
-  .report .section-heading .heading-number {transform:translateY(2px)}
+.report .section-heading:not(.supplied-heading) {border-bottom-color:transparent}
+.report .section-heading:not(.supplied-heading)::after {
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:#477fa4;z-index:2
 }
+.report .section-heading i {bottom:-1px;overflow:hidden}
+.report .section-heading .heading-number {transform:translateY(2px)}
 
 @media screen and (max-width:640px){.report .ranking .top-label{transform:translateY(-1.25px) scale(.90)}}
