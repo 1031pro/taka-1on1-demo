@@ -193,3 +193,6 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 .report .reader-note{display:block;white-space:nowrap}.report .signs ul.signs-copy{margin:0;padding-inline-start:1.3em;list-style:disc}.report .rank em{white-space:nowrap}
 
 .prompt-unit{display:inline-block;max-width:100%;line-break:strict;word-break:normal}
+
+@media (min-width:365px) and (max-width:440px){.prompt-slot .prompt-unit{display:block;letter-spacing:-.035em}body[data-screen=question] .question.flat-question h1{font-size:16px}}
+@media (min-width:365px) and (max-width:440px){.prompt-slot wbr{display:none}}
