@@ -15,7 +15,7 @@ const ctaCard=(kind)=>{const a=kind==='A';return `<article class="offer ${a?'off
 function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article class="entry-card">
 <header class="entry-banner"><h1><span><b>1on1</b> の時間、</span><span>部下の「<em>本音</em>」が</span><span>見えていますか？</span></h1>
 <p>あなたの1on1が変わる、<br>コミュニケーション診断</p></header>
-<section class="entry-body"><div class="entry-guide"><p>${flowText('過去3か月間の1on1や部下とのやり取りを振り返り、実際に取った行動をもとにお答えください。')}</p><p>${flowText('頭の中で考えただけの行動は含めず、普段の自分に近い回答を選んでください。')}</p></div>
+<section class="entry-body"><div class="entry-guide"><p>過去3か月間の1on1や部下とのやり取りを振り返り、実際に取った行動をもとにお答えください。</p><p>頭の中で考えただけの行動は含めず、普段の自分に近い回答を選んでください。</p></div>
 <div class="entry-choices">
 <p class="entry-count"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="18" rx="2"/><rect x="8" y="2" width="8" height="4" rx="1.5" fill="white"/><path d="M7 10h2m2 0h6M7 15h2m2 0h6"/></svg>全21問・Yes／Noで回答</p>
 <button class="entry-start" id="start">診断をはじめる　→</button>
