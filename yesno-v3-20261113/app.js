@@ -15,8 +15,11 @@ const ctaCard=(kind)=>{const a=kind==='A';return `<article class="offer ${a?'off
 function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article class="entry-card">
 <header class="entry-banner"><h1><span><b>1on1</b> の時間、</span><span>部下の「<em>本音</em>」が</span><span>見えていますか？</span></h1>
 <p>あなたの1on1が変わる、<br>コミュニケーション診断</p></header>
-<section class="entry-body"><p class="entry-guide">過去3か月間の1on1や部下との業務相談を思い出してください。同じような場面で実際にどのように行動したかを基準にお答えください。頭の中で考えただけの場合は、「はい」にしないでください。</p>
-<button class="entry-start" id="start">診断をはじめる →</button>
+<section class="entry-body"><div class="entry-guide"><p>過去3か月間の1on1や部下とのやり取りを振り返り、実際に取った行動をもとにお答えください。</p><p>頭の中で考えただけの行動は含めず、普段の自分に近い回答を選んでください。</p></div>
+<div class="entry-choices">
+<p class="entry-count"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="18" rx="2"/><rect x="8" y="2" width="8" height="4" rx="1.5" fill="white"/><path d="M7 10h2m2 0h6M7 15h2m2 0h6"/></svg>全21問・Yes／Noで回答</p>
+<button class="entry-start" id="start">診断をはじめる　→</button>
+<p class="entry-hint">回答は一問ずつ進みます</p></div>
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
 const promptSizers = questions.map(text =>

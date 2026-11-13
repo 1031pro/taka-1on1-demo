@@ -78,7 +78,7 @@ body[data-screen=question] .question-body h1{word-break:auto-phrase;margin-botto
 
 .binary-choices .missing-answer {grid-column:1/-1;border:1px solid #648494;border-radius:10px;background:#f4f8fa;color:#213749;font:600 16px/1.4 ReportSans,sans-serif;padding:10px}
 @media screen and (max-height:700px) and (max-width:640px) {
- .question-body {--answer-spacing:32px}
+ .question-body {--answer-spacing:20px}
  .binary-choices {row-gap:6px}
 }
 

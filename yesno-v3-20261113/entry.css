@@ -13,6 +13,12 @@ body[data-screen="intro"] #app {display:grid;place-items:center;min-height:100sv
 .entry-banner p {font-size:6.2cqw;line-height:1.48;font-weight:900;margin:5.3cqw 0 0}
 .entry-body {padding:6.8cqw 0 1.8cqw}
 .entry-guide {margin:0 auto;width:86%;margin-left:10%;font-size:3.85cqw;line-height:1.85;font-weight:500}
-.entry-start {display:block;margin:10.5cqw auto 0;width:45%;min-height:max(44px,12cqw);background:#9a213e;color:white;border:0;border-radius:1.6cqw;font-size:4.1cqw;font-weight:700}
+.entry-guide p {margin:0}
+.entry-guide p + p {margin-top:.8em}
+.entry-choices {width:90%;margin:5cqw auto 0;padding:2.6cqw 0 2cqw;border:1px solid #dedede;border-radius:2cqw;text-align:center;background:#fcfcfc}
+.entry-count {display:flex;align-items:center;justify-content:center;gap:.5em;margin:0;color:#171717;font:500 clamp(14px,2.6cqw,22px)/1.5 ReportSans,sans-serif}
+.entry-count svg {width:1em;height:1em;color:#666}
+.entry-start {display:block;margin:2.2cqw auto 1.8cqw;width:81%;min-height:max(44px,9.5cqw);background:#982444;color:white;border:0;border-radius:2cqw;font:500 clamp(16px,2.8cqw,24px)/1.5 ReportSans,sans-serif;cursor:pointer}
+.entry-hint {margin:0;color:#606060;font:400 clamp(13px,2.3cqw,19px)/1.5 ReportSans,sans-serif}
 .entry-credit {display:block;margin:10.8cqw auto 0;text-align:center;color:#757575;font:normal 3cqw/1.5 "Segoe UI",Meiryo,sans-serif}
 @media(max-width:640px){body[data-screen="intro"] #app{padding:0;background:white;place-items:start center}.entry-card{width:100%}}
