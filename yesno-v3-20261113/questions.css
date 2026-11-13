@@ -183,3 +183,9 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 .report .ellipsis-glyph::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 50%,#223a48 0 .073em,transparent .085em),radial-gradient(circle at 50% 50%,#223a48 0 .073em,transparent .085em),radial-gradient(circle at 82% 50%,#223a48 0 .073em,transparent .085em);print-color-adjust:exact}
 
 .prompt-slot .tight-comma{display:inline-block;width:.55em;white-space:nowrap}
+
+@media(max-width:820px){
+ .focus-step{display:flex;flex-direction:column}
+ .focus-step .focus-options{order:1}
+ .focus-step #back{align-self:flex-start;margin:0 0 12px}
+}
