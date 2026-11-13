@@ -24,7 +24,7 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 // All prompts share one grid cell so wrapping sets the same response position at each width.
 const promptSegmenter = typeof Intl.Segmenter==='function' ? new Intl.Segmenter('ja',{granularity:'word'}) : null;
 function promptMarkup(text){
- const protectedWords=/(できた点|押し通してしまう|話し続けてしまう|確認する|若い頃|ような発言が多い。|ここが違う|知らない|無理だ|聞いてしまう|持ち出して|取り繕ってしまう|長くなる|必要以上に|細かく|否定してしまう|例の資料どうなった？|ことが多い。|一言だけで|会話を終える|自分の苦労|わかりました|提案しても|好きだな|確認日|うなずき|どうなった|事務的|話し続けて|話し始める|変わらない|ような|そんなことも|その場を|言いにくそうに)/gu;
+ const protectedWords=/(私はこっちのやり方が好きだな|私の若い頃はもっと大変だったよ|この考え方はかなり高度だから|仕事の重要性|自分が話し続けてしまう|できた点より先に課題を指摘する|知っていて当然という態度で返す|自分の好みで決めてしまう|確認日よりも前に|そんなことも知らないの？|うなずきや相づち|つい冗談を挟んでしまう|内容の難しさを強調して|その場を取り繕ってしまう|自分の苦労と比べてしまう|仕事の進め方|できた点|押し通してしまう|話し続けてしまう|確認する|若い頃|ような発言が多い。|ここが違う|知らない|無理だ|聞いてしまう|持ち出して|取り繕ってしまう|長くなる|必要以上に|細かく|否定してしまう|例の資料どうなった？|ことが多い。|一言だけで|会話を終える|自分の苦労|わかりました|提案しても|好きだな|確認日|うなずき|どうなった|事務的|話し続けて|話し始める|変わらない|ような|そんなことも|その場を|言いにくそうに)/gu;
  const tokens=text.split(protectedWords).flatMap((part,i)=>i%2?[part]:promptSegmenter?Array.from(promptSegmenter.segment(part),v=>v.segment):Array.from(part));
  const units=[];
  let opening='';
@@ -59,7 +59,7 @@ function question(){
  <p class="q-number">Q${number}</p><h1 class="prompt-slot"><span>${promptMarkup(questions[current])}</span>${promptSizers}</h1>
  <div class="binary-choices">${choices.map(([value,label,sub])=>`<button type="button" data-answer="${value}" aria-pressed="${answers[current]===value}"><span class="choice-dot" aria-hidden="true"></span><b>${label}</b><span>${sub}</span></button>`).join('')}
  <button type="button" class="missing-answer" data-answer="missing" aria-pressed="${answers[current]==='missing'}"><span aria-hidden="true">⊖</span> 該当する場面がなかった</button></div>
- <hr class="answer-rule"><div class="guide-row"><span>最近3か月間の実際の行動で判断</span><details><summary><span aria-hidden="true">ⓘ</span> 回答の目安</summary><p class="answer-guide">「はい」：その場面の半数を超える機会で実際に行った。<br>「いいえ」：半数以下だった。<br>「該当する場面がなかった」：経験がなく判断できない。</p></details></div>
+ <hr class="answer-rule"><div class="guide-row"><span>最近3か月間の実際の行動で判断</span><details><summary><span aria-hidden="true">ⓘ</span> 回答の目安</summary><p class="answer-guide">「はい」：その場面の半数を超える機会で実際に行った。<br>「いいえ」：半数以下だった。<br>「該当する場面がなかった」：<span class="keep">経験がなく判断できない。</span></p></details></div>
  ${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
  app.querySelectorAll('[data-answer]').forEach(button=>button.onclick=()=>{
   if(transitioning)return;
@@ -145,10 +145,14 @@ function guardedCopy(text){
    pos+=n;
   }
  }
- for(const match of String(text).matchAll(/できた点|1つ|安心して|少なく|進みやすい|維持しにくく|一区切りつく|参考にして|確かめてから|実践ガイドです|見つかりませんでした|振り返り|お答えください|1on1|ありません|これ以上|ご用意しています|したい|しにくい|します|しやすくなる|ためではなく|できた|もらえるかな|伝える力|出しづらくなる|実際|少なくなる|確かめながら|確認します|聞いたうえで|見つける力|見る力|言葉にする力|話したい|語る前に|進み具合|進めやすくなる|話し始める|足りない|確かめず|難しさ|かかっている|聞いてほしかった|不明なこと|事実・経験・推測|答えられる|聞かせてください|経験を|3つの|実践ガイド|確認させてね|説明できていない|相談しやすい|だけれど|大変だった|提案しづらい|困ったとき|増えやすい|探しやすい|伝えやすく|説明しやすく|空けずに|あります|効果的|落ち着いて|優位性|細かな|改善点|事実・経験|その場で|若い頃|確認して|事務的|ような発言|尋ねることが|提案しても|ことが多い|リスクを|そんなことも|『一言だけで|『自分の苦労|ことがあってね|説明し終えて|いないのに|ください|ありますか|聞いて|反応が|話さなくても|終わりやすい|試せそう|心配されすぎ|何度も|相談しやすく|注意深さは|1on1質問|判断を|確認日|最中でも|強調して|わかりました|どうなった|『間を|好きだな|という態度|発言が|ここが違う|うなずき|変わらない|話し続けて|その場を|生かしやすく|聞いてほしかった|聞かせて|確かめずに|管理職育成|学びたい|経験談|優先する|リスク|変える|知っている|触れず/gu)){
+ for(const match of String(text).matchAll(/優先してしまう|試してみましょう|ほかにもありますか？|もう少し聞かせて|どんな条件なら試せそう？|今日は何から話したい？|この話はここまでで大丈夫？|少し心配されすぎ|と伝える|普段の自分|だけで終わる|目安です|ものではありません|用件や進行|もう少し詳しく聞かせてください|知識のように|相談できる|困っている|指摘する前に|合わせるよう|ないのだけれど|参考にしてもらえるかな|大変だった点|必要なとき|確認の仕方|事前に決める|1つに決めつけず|1つ選んで|気持ちに触れず|不足点|部下の成長|何でも聞いて|疑い始める|これ以上話さなくてもいいのかな|大きいのでは|行動の速さ|優先される|話が移る|相談しやすくなる|話を変える|判断を優先する|できた点|1つ|安心して|少なく|進みやすい|維持しにくく|一区切りつく|参考にして|確かめてから|実践ガイドです|見つかりませんでした|振り返り|お答えください|1on1|ありません|これ以上|ご用意しています|したい|しにくい|します|しやすくなる|ためではなく|できた|もらえるかな|伝える力|出しづらくなる|実際|少なくなる|確かめながら|確認します|聞いたうえで|見つける力|見る力|言葉にする力|話したい|語る前に|進み具合|進めやすくなる|話し始める|足りない|確かめず|難しさ|かかっている|聞いてほしかった|不明なこと|事実・経験・推測|答えられる|聞かせてください|経験を|3つの|実践ガイド|確認させてね|説明できていない|相談しやすい|だけれど|大変だった|提案しづらい|困ったとき|増えやすい|探しやすい|伝えやすく|説明しやすく|空けずに|あります|効果的|落ち着いて|優位性|細かな|改善点|事実・経験|その場で|若い頃|確認して|事務的|ような発言|尋ねることが|提案しても|ことが多い|リスクを|そんなことも|『一言だけで|『自分の苦労|ことがあってね|説明し終えて|いないのに|ください|ありますか|聞いて|反応が|話さなくても|終わりやすい|試せそう|心配されすぎ|何度も|相談しやすく|注意深さは|1on1質問|判断を|確認日|最中でも|強調して|わかりました|どうなった|『間を|好きだな|という態度|発言が|ここが違う|うなずき|変わらない|話し続けて|その場を|生かしやすく|聞いてほしかった|聞かせて|確かめずに|管理職育成|学びたい|経験談|優先する|リスク|変える|知っている|触れず/gu)){
   for(let i=match.index;i<match.index+match[0].length-1;i++)join.add(i);
  }
  chars.forEach((c,i)=>{if(open.test(c))join.add(i);if(close.test(c)&&i)join.add(i-1);});
+ for(const match of String(text).matchAll(/」(と一度尋ねる|と確認する|と尋ねる|と伝える)/gu)){
+  join.delete(match.index);
+  for(let i=match.index+1;i<match.index+match[0].length-1;i++)join.add(i);
+ }
  let parts=[],part='';chars.forEach((c,i)=>{part+=c;if(!join.has(i)){parts.push(part);part='';}});if(part)parts.push(part);
  return parts.map(x=>Array.from(x).length>1?'<span class="break-guard">'+escapeHtml(x)+'</span>':escapeHtml(x)).join('');
 }

@@ -197,3 +197,5 @@ body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-br
 .report .flow-text,.entry-guide .flow-text,.report .reader-note{line-break:strict;word-break:normal;white-space:normal;text-wrap:wrap}
 
 @media(max-width:640px){body[data-screen=question] .flat-question .prompt-slot{font-size:16px;letter-spacing:-.025em}}
+
+@media (max-width: 640px) { .report .next > span { min-width: 0; flex: 1; } .report .next .break-guard { max-width: 100%; white-space: normal; } }
