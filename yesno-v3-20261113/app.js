@@ -23,7 +23,11 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
 function promptMarkup(text){
- return text.split(/(『[^』]+』)/g).map(s=>s.startsWith('『')?'<strong>'+guardedCopy(s)+'</strong>':guardedCopy(s)).join('');
+ return text.split(/(『[^』]+』)/g) .map((part,i,parts)=>{
+  if(part.startsWith('『'))return '<strong>'+guardedCopy(part)+'</strong>';
+  const html=guardedCopy(part);
+  return part.endsWith('、')&&parts[i+1]?.startsWith('『')?html.replace(/、(?=(?:<\/span>)*$)/,'<span class="tight-comma">、</span>'):html;
+ }).join('');
 }
 const promptSizers = questions.map(text =>
   '<span class="prompt-sizer" aria-hidden="true">'+promptMarkup(text)+'</span>'
@@ -193,7 +197,7 @@ function guardedCopy(text){
    pos+=n;
   }
  }
- for(const match of String(text).matchAll(/答えられる|聞かせてください|経験を|3つの|実践ガイド|確認させてね|説明できていない|相談しやすい|だけれど|大変だった|提案しづらい|困ったとき|増えやすい|探しやすい|伝えやすく|説明しやすく|空けずに|あります|効果的|落ち着いて|優位性|細かな|改善点|事実・経験|その場で|若い頃|確認して|事務的|ような発言|尋ねることが|提案しても|ことが多い|リスクを|そんなことも|『一言だけで|『自分の苦労|ことがあってね|説明し終えて|いないのに|ください|ありますか|聞いて|反応が|話さなくても|終わりやすい|試せそう|心配されすぎ|何度も|相談しやすく|注意深さは|1on1質問|判断を|確認日|最中でも|強調して|わかりました|どうなった|『間を|好きだな|という態度|発言が|ここが違う|うなずき|変わらない|話し続けて|その場を|生かしやすく|聞いてほしかった|聞かせて|確かめずに|管理職育成|学びたい|経験談|優先する|リスク|変える|知っている|触れず/gu)){
+ for(const match of String(text).matchAll(/話し始める|足りない|確かめず|難しさ|かかっている|聞いてほしかった|不明なこと|事実・経験・推測|答えられる|聞かせてください|経験を|3つの|実践ガイド|確認させてね|説明できていない|相談しやすい|だけれど|大変だった|提案しづらい|困ったとき|増えやすい|探しやすい|伝えやすく|説明しやすく|空けずに|あります|効果的|落ち着いて|優位性|細かな|改善点|事実・経験|その場で|若い頃|確認して|事務的|ような発言|尋ねることが|提案しても|ことが多い|リスクを|そんなことも|『一言だけで|『自分の苦労|ことがあってね|説明し終えて|いないのに|ください|ありますか|聞いて|反応が|話さなくても|終わりやすい|試せそう|心配されすぎ|何度も|相談しやすく|注意深さは|1on1質問|判断を|確認日|最中でも|強調して|わかりました|どうなった|『間を|好きだな|という態度|発言が|ここが違う|うなずき|変わらない|話し続けて|その場を|生かしやすく|聞いてほしかった|聞かせて|確かめずに|管理職育成|学びたい|経験談|優先する|リスク|変える|知っている|触れず/gu)){
   for(let i=match.index;i<match.index+match[0].length-1;i++)join.add(i);
  }
  chars.forEach((c,i)=>{if(open.test(c))join.add(i);if(close.test(c)&&i)join.add(i-1);});
