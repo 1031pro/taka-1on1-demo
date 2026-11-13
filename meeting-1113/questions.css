@@ -195,3 +195,5 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-break:strict;text-wrap:wrap}
 
 .report .flow-text,.entry-guide .flow-text,.report .reader-note{line-break:strict;word-break:normal;white-space:normal;text-wrap:wrap}
+
+@media(max-width:640px){body[data-screen=question] .flat-question .prompt-slot{font-size:16px;letter-spacing:-.025em}}

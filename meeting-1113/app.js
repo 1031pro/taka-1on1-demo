@@ -24,7 +24,7 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 // All prompts share one grid cell so wrapping sets the same response position at each width.
 const promptSegmenter = typeof Intl.Segmenter==='function' ? new Intl.Segmenter('ja',{granularity:'word'}) : null;
 function promptMarkup(text){
- const protectedWords=/(一言だけで|会話を終える|自分の苦労|わかりました|提案しても|好きだな|確認日|うなずき|どうなった|事務的|話し続けて|話し始める|変わらない|ような|そんなことも|その場を|言いにくそうに)/gu;
+ const protectedWords=/(確認する|若い頃|ような発言が多い。|ここが違う|知らない|無理だ|聞いてしまう|持ち出して|取り繕ってしまう|長くなる|必要以上に|細かく|否定してしまう|例の資料どうなった？|ことが多い。|一言だけで|会話を終える|自分の苦労|わかりました|提案しても|好きだな|確認日|うなずき|どうなった|事務的|話し続けて|話し始める|変わらない|ような|そんなことも|その場を|言いにくそうに)/gu;
  const tokens=text.split(protectedWords).flatMap((part,i)=>i%2?[part]:promptSegmenter?Array.from(promptSegmenter.segment(part),v=>v.segment):Array.from(part));
  const units=[];
  let opening='';
