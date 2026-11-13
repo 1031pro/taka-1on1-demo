@@ -201,3 +201,5 @@ body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-br
 @media (max-width: 640px) { .report .next > span { min-width: 0; flex: 1; } .report .next .break-guard { max-width: 100%; white-space: normal; } }
 
 .prompt-slot { font-feature-settings: "chws" 1; }
+
+.prompt-slot .tight-open { display: inline-block; width: .67em; text-indent: -.33em; }

@@ -36,10 +36,15 @@ function promptMarkup(text){
  }
  if(opening) units.push(opening);
  let bold=false;
+ let offset=0;
  return units.map(unit=>{
   const html=Array.from(unit,char=>{
    if(char==='『') bold=true;
-   const value=bold?'<strong>'+escapeHtml(char)+'</strong>':escapeHtml(char);
+   let glyph=escapeHtml(char);
+   if(char==='、' && /[「『]/u.test(text[offset+1] || '')) glyph='<span class="tight-comma">、</span>';
+   if((char==='「'||char==='『') && text[offset-1]==='、') glyph='<span class="tight-open">'+char+'</span>';
+   offset+=char.length;
+   const value=bold?'<strong>'+glyph+'</strong>':glyph;
    if(char==='』') bold=false;
    return value;
   }).join('').replaceAll('</strong><strong>','');
