@@ -212,5 +212,5 @@ body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-br
 
 @media(min-width:900px){.report .report-content section:last-child .next .flow-text{display:block;text-wrap:balance}}
 
-.mobile-q03-break{display:none}
-@media(max-width:640px){.mobile-q03-break{display:initial}}
+.mobile-behavior-break{display:none}
+@media(max-width:640px){.mobile-behavior-break{display:initial}}
