@@ -62,7 +62,7 @@ body[data-screen=question] .question-body h1{word-break:auto-phrase;margin-botto
   aspect-ratio:1;border-radius:50%;background:#e4eef5;z-index:-1
 }
 .report .section-heading .heading-number {display:block;transform:translateY(1px)}
-.report .ranking .top-label {vertical-align:middle;transform:translateY(2px)}
+.report .ranking .top-label {vertical-align:middle;transform:translateY(-1px) scale(.91);transform-origin:left center}
 .report .changes ul {padding-block:5px}
 @media print {
   .report .section-heading i {bottom:-1.5px}
@@ -85,3 +85,15 @@ body[data-screen=question] .question-body h1{word-break:auto-phrase;margin-botto
 .pending-counts {width:86%;margin:12px auto;line-height:1.65;color:#213749}
 
 .rank-caption {margin:0 0 5px;font-size:14px}
+
+@media print {
+  .report .section-heading:not(.supplied-heading) {border-bottom-color:transparent}
+  .report .section-heading:not(.supplied-heading)::after {
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+    background:#477fa4;z-index:2
+  }
+  .report .section-heading i {bottom:-1px;overflow:hidden}
+  .report .section-heading .heading-number {transform:translateY(2px)}
+}
+
+@media screen and (max-width:640px){.report .ranking .top-label{transform:translateY(-1.25px) scale(.90)}}
