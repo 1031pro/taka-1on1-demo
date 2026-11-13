@@ -21,18 +21,18 @@ body[data-screen=question] .choices button{min-height:44px;white-space:normal;pa
   width: 100%;
   min-height: 54px;
   padding: 14px 20px;
-  border: 1px solid #19536a;
+  border: 1px solid #999;
   border-radius: 16px;
-  background: linear-gradient(178deg, #267896, #206885 72%);
-  box-shadow: inset 1px 2px 3px #64adca, inset -1px -3px 3px #134459;
-  color: white;
+  background: #fff;
+  box-shadow: none;
+  color: #222;
   font: 600 16px/1.5 ReportSans, sans-serif;
   text-align: left;
   word-break: auto-phrase;
 }
-.focus-options button:hover {filter: brightness(1.05)}
-.focus-options button:active {box-shadow: inset 0 2px 5px #134459}
-.focus-options button:focus-visible {outline: 3px solid #172f40; outline-offset: 2px}
+.focus-options button:hover {background: #f3f3f3}
+.focus-options button:active {background: #e6e6e6}
+.focus-options button:focus-visible {outline: 3px solid #333; outline-offset: 2px}
 .focus-step .back {margin-top:10px}
 .focus-note {margin:8px auto;width:86%;font-size:clamp(14px,1.3vw,18px);color:#69243b;font-weight:bold}
 .common-action {width:86%;margin:16px auto;line-height:1.6}
@@ -164,7 +164,7 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 .flat-question .prompt-slot{padding-bottom:6px;text-spacing-trim:trim-all}
 .report .summary:not(:has(.ranking)){grid-template-columns:1fr}
 .report .pending-counts,.report .common-action{padding:12px 16px;background:#edf3f6;border-radius:8px}
-.focus-options [data-focus=common]{margin-top:4px;background:white;color:#244653;box-shadow:none}
+.focus-options [data-focus=common]{margin-top:4px}
 .gate{border-radius:12px}.gate [role=alert]:not(:empty){color:#982540;font-weight:700}.gate:has([role=alert]:not(:empty)) input{border-color:#982540}
 .question #back,.focus-step #back{border:1px solid #bac8ce;border-radius:8px;min-height:44px;padding:6px 13px;background:white;color:#294451;font-weight:600}
 .guide-row{display:grid;grid-template-columns:1fr auto;align-items:center}
