@@ -15,7 +15,7 @@ const ctaCard=(kind)=>{const a=kind==='A';return `<article class="offer ${a?'off
 function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article class="entry-card">
 <header class="entry-banner"><h1><span><b>1on1</b> の時間、</span><span>部下の「<em>本音</em>」が</span><span>見えていますか？</span></h1>
 <p>あなたの1on1が変わる、<br>コミュニケーション診断</p></header>
-<section class="entry-body"><div class="entry-guide"><p>過去3か月間の1on1や部下とのやり取りを振り返り、実際に取った行動をもとにお答えください。</p><p>頭の中で考えただけの行動は含めず、普段の自分に近い回答を選んでください。</p></div>
+<section class="entry-body"><div class="entry-guide"><p>${flowText('過去3か月間の1on1や部下とのやり取りを振り返り、実際に取った行動をもとにお答えください。')}</p><p>${flowText('頭の中で考えただけの行動は含めず、普段の自分に近い回答を選んでください。')}</p></div>
 <div class="entry-choices">
 <p class="entry-count"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="18" rx="2"/><rect x="8" y="2" width="8" height="4" rx="1.5" fill="white"/><path d="M7 10h2m2 0h6M7 15h2m2 0h6"/></svg>全21問・Yes／Noで回答</p>
 <button class="entry-start" id="start">診断をはじめる　→</button>
@@ -121,7 +121,7 @@ function result(selection){
 app.innerHTML=`<article class="sheet report${normal?'':' report-exception'}" data-type="${r?.name||''}">${header()}${normal?`<div class="summary">${rankingMarkup(shown)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${r.name+'傾向'}</strong></h2><div class="focus-copy"><p>${r?strengthMarkup(r.strength):escapeHtml(message)}</p>${normal?`<img class="type-illustration" src="assets/types/chara${String(chosen.index+1).padStart(2,'0')}.png" width="400" height="400" alt="${escapeHtml(r.name)}タイプのイラスト">`:''}</div></section></div>`:exceptionSummary(valid,message,title)}
 ${normal&&leaders.length>1?`<p class="focus-note">同率1位の中から、あなたが選んだ傾向は<span class="keep">「${r.name}」です。</span></p>`:''}
 ${!normal&&leaders.length>1?`<section class="common-action"><h2>次の1on1で試せること</h2><ul>${leaders.map(type=>`<li>${flowText(reports[type.index].actions[0])}</li>`).join('')}</ul></section>`:''}
-${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line,note])=>`<p data-who="${who}"><b>${who}</b><span>${flowText('「'+line+'」')}${note ? '<span class="reader-note">'+escapeHtml(note)+'</span>' : ''}</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><ul class="signs-copy">${r.examples.map(item=>`<li>${flowText(item)}</li>`).join('')}</ul></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(r.signs)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b><span>今</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b><span>これから</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}
+${r?`<div class="report-content"><section>${heading('01','こんな1on1、心当たりはありませんか？')}<div class="dialogue-columns"><div><div class="dialogue">${r.dialogue.map(([who,line,note])=>`<p data-who="${who}"><b>${who}</b><span>${flowText('「'+line+'」')}${note ? '<span class="reader-note">'+guardedCopy(note)+'</span>' : ''}</span></p>`).join('')}</div><div class="signs"><b><span class="sign-mark" aria-hidden="true">!</span><span>こんなこと<br>ありませんか？</span></b><ul class="signs-copy">${r.examples.map(item=>`<li>${flowText(item)}</li>`).join('')}</ul></div></div><div class="voice-column"><div class="voice"><div><b>部下の心の声（例）</b><p>${flowText(r.voice)}</p></div>${crop(1029,538,76,86,'部下のイラスト')}</div><div class="voice-arrow">${vectorCrop(796,631,47,24)}</div><p class="context">${flowText(r.signs)}</p></div></div></section><section>${heading('02','良かれと思った言動が、なぜ逆効果に？')}<p class="reason">${flowText(r.reason)}</p></section><section>${heading('03','次の1on1で試す、小さな変え方')}<ol class="actions">${r.actions.map((a,i)=>`<li>${vectorCrop([95,446,797][i],945,54,54,'action-number')}${actionMarkup(a)}${i?vectorCrop(411,959,16,26,'action-arrow'):''}</li>`).join('')}</ol><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText(r.next)}</span></p></section><section>${heading('04','こんな1on1に変わっていったら？')}<div class="changes"><div><b><span>今</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[0])}</li>`).join('')}</ul>${crop(455,1152,100,59)}</div>${vectorCrop(582,1138,31,56,'change-arrow')}<div><b><span>これから</span></b><ul>${r.changes.map(x=>`<li>${flowText(x[1])}</li>`).join('')}</ul>${crop(1029,1153,72,58)}</div></div><p class="next"><svg class="next-icon" aria-hidden="true" viewBox="165 1017 52 33"><image href="assets/reference-vector.svg" width="1191" height="1685"/></svg><span>${flowText('1on1を「報告の時間」から、部下の成長を支える対話の時間へ。')}</span></p></section></div>`:''}
 
 <section class="cta">${normal?heading('05','あなたの次の一歩を選んでください'):`<h2 class="exception-heading">${headingMarkup('あなたの次の一歩を選んでください')}</h2>`}<p>${flowText('この診断は「気づき」の入り口です。さらに学びたい方には、目的別の情報をご用意しています。')}</p><div class="cta-columns">${ctaCard('A')}${ctaCard('B')}</div></section><div class="result-tools"><button id="print" class="primary">結果をPDFで保存</button><button id="retry">もう一度診断する</button></div><footer class="footer"><p>${flowText('※診断は自己回答に基づくコミュニケーション傾向の目安です。部下の本音や職場の課題を断定するものではありません。')}</p><a href="https://nlpi.jp/" target="_blank" rel="noopener">株式会社アイエヌエー　https://nlpi.jp/</a></footer></article>`;
 document.querySelectorAll('.voice .flow-text,.dialogue .flow-text').forEach(block=>{
@@ -135,75 +135,6 @@ document.querySelector('form').onsubmit=e=>{e.preventDefault();if(document.query
 // PDFの縮尺と余白はprint用CSSへ集約する。
 
 // 表示原稿は変えず、語と助詞・語尾・閉じ記号をまとまりとして扱う。
-const phraseLexicon = ['どの程度','正解・不正解','今回','今日','今後','先日','後日','次回','話す前に','相談方法','支える力','ご用意しています','良い点','見る力','伝える力','見つける力','言葉にする力','聞いたうえで','語る前に','しやすい','されすぎ','聞いて','あるのに','いないのに','相談したい','確認します','して','もらえるかな','これ以上','説明しやすく','提案しづらい','大変だった','ほしかった','大きかった','詳しく','解決策','説明し終えて','できていない','優先したり','出しづらくなる','探しやすい','しやすくなる','しづらい','安心感','注意深さ','小さく','進めやすくなる','確かめながら','生かしやすく','聞かせて','3つ','7つ','速さ','したいこと','コミュニケーション','部下の心の声','経験談','進み具合','具体的','その都度','そのくらい','難しさ','頼りになる','話し終わる','話し終えたら','話し始める','考え始める','受け止める','受け止め','話し合える','思いついた','任せた','聞かれる','聞いた','聞くと','話したい','話せる','終わりやすい','終わる','終わり','伝えやすく','伝える','加える','感じる','考えを','気持ち','気になる','気になり','少なくなる','増えやすい','しにくい','ながら','区切る','一区切り','短く','尋ねる','確かめる','できます','できる','できた','でき','あります','ありません','ある','する','します','ください','されすぎ','かも','ためではなく','十分に','うえで','もらえる','待ってみる','あってね','させてね','試せそう','優先したくなる','確認したくなる','盛ること','和ませよう','挟みたくなる','知っていてほしい','考えてきた','進めたい','答えたくなる','始めたくなる','伝えておきたい','説明したい','思われたい','ないか','一度','もう少し','学びたい','管理職','職場','実際','活用','リスク','1on1','実践シート','実践ガイド','プレゼント','したい','話す','しかし','必要','参考に','だけれど','話さなくても'].sort((a,b)=>b.length-a.length);
-function phraseParts(text){
- // 漢字・カタカナの語幹と後続かなを一体として取り出す。
- // 語尾を別トークンとして切り出さない。既存の複合語辞書は境界保護だけに使う。
- const chunks=Array.from(text.matchAll(/[\p{Script=Han}々〆]+[ぁ-ゖー]*|[ァ-ヺー]+[ぁ-ゖ]*|[A-Za-z0-9]+[ぁ-ゖ]*|[ぁ-ゖ]+|./gu));
- const protectedRanges=[];
- for(const word of phraseLexicon){let pos=text.indexOf(word);while(pos!==-1){protectedRanges.push([pos,pos+word.length]);pos=text.indexOf(word,pos+word.length);}}
- const tokens=[];
- for(const chunk of chunks){
-  const inside=protectedRanges.some(([a,b])=>chunk.index>a&&chunk.index<b);
-  if(inside&&tokens.length)tokens[tokens.length-1]+=chunk[0];else tokens.push(chunk[0]);
- }
- // 時点を表す副詞と動詞、名詞＋助詞と後続述語は独立した句にする。
- for(let i=0;i<tokens.length;i++){
-  const pieces=tokens[i].replace(/^(今|先|後|次)(?!回|日|後)(?=\p{Script=Han}[ぁ-ゖ])/u,'$1|').split(/\||(?=その|この|どの)|(?<=に)(?=つなが)|(?<=[るす])(?=こと)|(?<=て)(?=いない|いる|いて|ほしい)|(?<=程度)(?=当て)/u);
-  if(pieces.length>1){tokens.splice(i,1,...pieces);i+=pieces.length-1;}
- }
- // 長いかな連続部分は助辞・補助表現の手前を改行候補にする。
- for(let i=0;i<tokens.length;i++){
-  if(Array.from(tokens[i]).length>11){
-   const pieces=tokens[i].split(/(?=わけ|もの|ください|ほしかった|どの|いいの|では|あるのに)|(?<!たい)(?=こと)/u).filter(Boolean);
-   if(pieces.length>1){tokens.splice(i,1,...pieces);i+=pieces.length-1;}
-  }
- }
- // 活用・補助語を先に結合し、後続名詞に語尾を奪われないようにする。
- for(let i=1;i<tokens.length;i++){
-  const a=tokens[i-1],b=tokens[i];
-  const ending=/^(?:やすい|にくい|づらい|られる|れる|らない|ら|れ|べ|んで|っ|め|せ|わ|た|ない)$/.test(b);
-  const sahen=/\p{Script=Han}$/u.test(a)&&/^(?:する|して|した|しない|しにく|させ|しよう|し$|され|でき|しやす)/.test(b);
-  const prefix=/^[不未非無再各全]$/.test(a)&&/^\p{Script=Han}/u.test(b);
-  const compound=/(?:い|り|き|し|み|び|ち|ぎ|え)$/.test(a)&&/^(?:\p{Script=Han}[ぁ-ゖ]+|方[にはがを]?)$/u.test(b);
-  const stem=/\p{Script=Han}$/u.test(a)&&/^[かきくけこさしすせそたちつてとなにぬねのまみむめもらりるれろ]$/.test(b)&&!/^(?:の|に|と|て)$/.test(b);
-  if((ending&&!/^[「『（(、。・]$/.test(a))||sahen||prefix||compound||stem){tokens.splice(i-1,2,a+b);i=Math.max(0,i-2);}
- }
- // 名詞との結合は形式名詞と短い修飾関係に限定する。
- for(let i=1;i<tokens.length;i++){
-  const a=tokens[i-1],b=tokens[i];
-  const sahen=/\p{Script=Han}$/u.test(a)&&/^(?:する|して|し$|され|でき|しやす)/.test(b);
-  const predicate=/(?:く|に)$/.test(a)&&/^(?:する|して|なる|なり)/.test(b);
-  const nominal=/(?:う|く|ぐ|す|つ|ぬ|ぶ|む|る|い|た|な)$/.test(a)&&(/^(?:ため|前|後|うえ|とき|わけ)(?:に|の|では|が|は|を|と|から|まで|でも|も|で|はなく)*$/.test(b)||/^[点力人](?:に|の|が|は|を|と|だと|よりも)*$/.test(b));
-  const adjective=!/^(?:自分|相手|部下|上司)(?:の|は|が|を|に)?$/.test(b)&&/(?:い|な)$/.test(a)&&!/(?:たい|ない|やすい|にくい|づらい)$/.test(a)&&/^\p{Script=Han}{1,2}(?:は|を|が|に|の)?$/u.test(b);
-  const suffix=/^(?:られる|れる|らない|ら$|れ$)/.test(b)||(/\p{Script=Han}$/u.test(a)&&/^(?:\p{Script=Han}|さ)$/u.test(b));
-  const explanation=a==='の'&&/^(?:だ|です|では)/.test(b);
-  if(sahen||predicate||nominal||adjective||explanation||suffix){tokens.splice(i-1,2,a+b);i=Math.max(0,i-2);}
- }
- const parts=[];let opening='';
- const attach=/^(?:は|が|を|に|の|と|も|へ|で|や|から|まで|より|だけ|では|には|でも|とは|ので|のに|について|ます|ません|まし|た|て|だ|です|でし|ない|れる|られる|たい|そう|か|ね|よ|な|ながら|つつ|たり|なく|にくい|やすい|すぎ|いる|ある|なる|こと)$/;
- for(const token of tokens){
-  if(/^[「『（(]+$/.test(token)){opening+=token;continue;}
-  if(/^[、。！？!?」』）)……]+$/.test(token) && parts.length && !opening){parts[parts.length-1]+=token;continue;}
-  if((attach.test(token)||/^(?:によって|のだけれど)/.test(token))&&parts.length&&!opening&&(Array.from(parts[parts.length-1]+token).length<=14||/^(?:と|は|が|を|に)$/.test(token))){parts[parts.length-1]+=token;continue;}
-  parts.push(opening+token);opening='';
- }
- // 活用・助詞を付けた後のまとまりも統合する。
- for(let i=1;i<parts.length;i++){
-  const a=parts[i-1],b=parts[i];
-  const shortSubject=Array.from(a+b).length<=9&&/^(?:\p{Script=Han}を|\p{Script=Han}が)$/u.test(a)&&/^[\p{Script=Han}ぁ-ん]+(?:う|く|す|る|て|い|り|せ|め)/u.test(b);
-  const adjectivalSubject=/の$/.test(a)&&/^(?:多い|少ない|高い|低い|長い|短い|大きい|小さい)/.test(b);
-  const formal=/(?:の|え|め|り|し|き|た)$/.test(a)&&/^方[がはをにや]/.test(b);
-  if((/\p{Script=Han}を$/u.test(a)&&/^し(?:て|た|ます|ない|よう)/.test(b))||shortSubject||adjectivalSubject||formal||(/^に(?:する|して|なる|なり)/.test(b))||(/(?:く|に)$/.test(a)&&/^(?:する|して|なる|なり)/.test(b))||(/ことが$/.test(a)&&/^でき/.test(b))||(/\p{Script=Han}$/u.test(a)&&/^な\p{Script=Han}/u.test(b))){parts.splice(i-1,2,a+b);i=Math.max(0,i-2);}
- }
- for(let i=0;i<parts.length;i++){const xs=parts[i].split(/(?<=ほかにも)(?=あります)|(?<=もう少し)(?=聞かせて)|(?<=参考に)(?=して)|(?<=して)(?=もらえる)|(?<=話は)(?=ここ)|(?<=一度)(?=言葉)|(?<=一区切り)(?=つく)|(?<=もう少し)(?=詳しく)|(?<=力に)(?=なり)|(?<=ことで)(?=強み)|(?<=強み)(?=になり)|(?<=聞かせて)(?=ください)|(?<=」)(?=と)/u);if(xs.length>1){parts.splice(i,1,...xs);i+=xs.length-1;}}
- // 対の語と短い列挙をまとめ、後続の述語まで結合しない。
- for(let i=1;i<parts.length;i++){if(parts[i-1]==='どの'&&/^程度/.test(parts[i])){parts.splice(i-1,2,parts[i-1]+parts[i]);i--;continue;}if(parts[i]==='・'&&i+1<parts.length){parts.splice(i-1,3,parts[i-1]+parts[i]+parts[i+1]);i=Math.max(0,i-2);}}
- if(opening){if(parts.length)parts[parts.length-1]+=opening;else parts.push(opening);}
- return parts;
-}
-// Keep opening marks with the next character, closing marks with their word,
- // and the last few characters together even in engines with different Japanese wrapping.
 function guardedCopy(text){
  const chars=Array.from(String(text)), join=new Set(), open=/^[「『（【]$/u, close=/^[、。！？?!」』）】…ぁぃぅぇぉっゃゅょー]$/u;
  if(typeof Intl.Segmenter==='function'){
@@ -218,11 +149,10 @@ function guardedCopy(text){
   for(let i=match.index;i<match.index+match[0].length-1;i++)join.add(i);
  }
  chars.forEach((c,i)=>{if(open.test(c))join.add(i);if(close.test(c)&&i)join.add(i-1);});
- for(let i=Math.max(0,chars.length-4);i<chars.length-1;i++)join.add(i);
  let parts=[],part='';chars.forEach((c,i)=>{part+=c;if(!join.has(i)){parts.push(part);part='';}});if(part)parts.push(part);
  return parts.map(x=>Array.from(x).length>1?'<span class="break-guard">'+escapeHtml(x)+'</span>':escapeHtml(x)).join('');
 }
-function flowText(text){return '<span class="flow-text"><span class="mobile-flow">'+guardedCopy(text)+'</span>'+phraseParts(String(text)).map(p=>'<span class="phrase">'+escapeHtml(p)+'</span>').join('<wbr>')+'</span>';}
+function flowText(text){return '<span class="flow-text">'+guardedCopy(text)+'</span>';}
 function headingMarkup(text){
  const parts={
   'こんな1on1、心当たりはありませんか？':['こんな1on1、','心当たりは','ありませんか？'],

@@ -193,3 +193,5 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 .report .reader-note{display:block;white-space:nowrap}.report .signs ul.signs-copy{margin:0;padding-inline-start:1.3em;list-style:disc}.report .rank em{white-space:nowrap}
 
 body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-break:strict;text-wrap:wrap}
+
+.report .flow-text,.entry-guide .flow-text,.report .reader-note{line-break:strict;word-break:normal;white-space:normal;text-wrap:wrap}
