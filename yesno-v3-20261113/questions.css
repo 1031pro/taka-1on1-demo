@@ -208,6 +208,6 @@ body[data-screen=question] .question-body .prompt-slot{word-break:normal;line-br
 
 @media(max-width:640px){.report-exception .focus-copy:has(>p:only-child) p{width:100%;max-width:100%;margin-right:0}.report-exception .focus-copy:has(>p:only-child){padding-right:12px}}
 
-@media(max-width:389px){.prompt-slot .prompt-thirteen{font-size:clamp(14px,4vw,15.5px)}}
+@media(max-width:400px){.prompt-slot .prompt-thirteen{font-size:clamp(14px,4vw,15px)}}
 
 @media(min-width:900px){.report .report-content section:last-child .next .flow-text{display:block;text-wrap:balance}}
