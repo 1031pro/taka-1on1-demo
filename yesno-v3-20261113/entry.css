@@ -26,3 +26,5 @@ body[data-screen="intro"] #app {display:grid;place-items:center;min-height:100sv
 .entry-guide {width:84%;margin-inline:auto}
 
 .entry-guide p .flow-text{display:inline}.entry-guide p .break-guard{display:inline-block;white-space:nowrap}
+
+.entry-banner p{font-size:4.85cqw}
