@@ -42,7 +42,7 @@ function question(){
  <p class="q-number">Q${number}</p><h1 class="prompt-slot"><span>${promptMarkup(questions[current])}</span>${promptSizers}</h1>
  <div class="binary-choices">${choices.map(([value,label,sub])=>`<button type="button" data-answer="${value}" aria-pressed="${answers[current]===value}"><span class="choice-dot" aria-hidden="true"></span><b>${label}</b><span>${sub}</span></button>`).join('')}
  <button type="button" class="missing-answer" data-answer="missing" aria-pressed="${answers[current]==='missing'}"><span aria-hidden="true">⊖</span> 該当する場面がなかった</button></div>
- <hr class="answer-rule"><div class="guide-row"><span>最近3か月間の実際の行動で判断</span><details><summary><span aria-hidden="true">ⓘ</span> 回答の目安</summary><p class="answer-guide">「はい」：その場面の半数を超える機会で実際に行った<br>「いいえ」：半数以下だった<br>「該当する場面がなかった」：経験がなく判断できない。</p></details></div>
+ <hr class="answer-rule"><div class="guide-row"><span>最近3か月間の実際の行動で判断</span><details><summary><span aria-hidden="true">ⓘ</span> 回答の目安</summary><p class="answer-guide">「はい」：その場面の半数を超える機会で実際に行った。<br>「いいえ」：半数以下だった。<br>「該当する場面がなかった」：経験がなく判断できない。</p></details></div>
  ${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
  app.querySelectorAll('[data-answer]').forEach(button=>button.onclick=()=>{
   if(transitioning)return;
@@ -99,7 +99,7 @@ function result(selection){
  const normal = Boolean(r);
  const shown=chosen?[chosen,...valid.filter(x=>x!==chosen&&x.score===chosen.score),...valid.filter(x=>x.score!==chosen.score)]:valid;
  const title = unclear ? '判定結果' : '複合傾向';
- const message = unclear ? '今回の回答では明確な傾向は見つかりませんでした' : window.CONTENT.exceptions.tie;
+ const message = unclear ? '今回の回答では明確な傾向は見つかりませんでした。' : window.CONTENT.exceptions.tie;
  document.body.dataset.screen='result';
 app.innerHTML=`<article class="sheet report${normal?'':' report-exception'}" data-type="${r?.name||''}">${header()}${normal?`<div class="summary">${rankingMarkup(shown)}<section class="focus"><h2><span>今回の<br>注目タイプ</span><strong>${r.name+'傾向'}</strong></h2><div class="focus-copy"><p>${r?strengthMarkup(r.strength):escapeHtml(message)}</p>${normal?`<img class="type-illustration" src="assets/types/chara${String(chosen.index+1).padStart(2,'0')}.png" width="400" height="400" alt="${escapeHtml(r.name)}タイプのイラスト">`:''}</div></section></div>`:exceptionSummary(valid,message,title)}
 ${normal&&leaders.length>1?`<p class="focus-note">同率1位の中から、あなたが選んだ傾向は<span class="keep">「${r.name}」です。</span></p>`:''}
