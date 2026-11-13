@@ -10,7 +10,19 @@
 <style>
 html,body{height:100%;margin:0;background:#edf2f4}
 iframe{display:block;width:100%;max-width:390px;height:100%;margin:auto;border:0;background:white}
+html,body{overflow:hidden}
+@media(min-width:700px){
+ iframe{position:absolute;left:50%;top:0;width:390px;height:calc(100% / var(--scale,1));margin-left:-195px;transform:scale(var(--scale,1));transform-origin:top center}
+}
 </style>
+<script>
+function sizeDesktopView(){
+ const scale=Math.min(1.25,Math.max(1,innerWidth/850),Math.max(1,innerHeight/570));
+ document.documentElement.style.setProperty("--scale",scale);
+}
+sizeDesktopView();
+window.addEventListener("resize",sizeDesktopView);
+</script>
 </head>
 <body>
 <iframe src="screen.html?v=mobileview1113" title="1on1コミュニケーション診断"></iframe>
