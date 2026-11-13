@@ -176,3 +176,8 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 .guide-row details:not([open]) .answer-guide{display:none!important}
 .question #back{margin-top:12px}
 .report-exception .summary:not(:has(.ranking)){min-height:0;height:auto;padding-block:12px}
+
+.common-action ul{margin:.5em 0 0;padding-inline-start:1.5em;text-align:left}
+.common-action li+li{margin-top:.35em}
+.report .ellipsis-glyph{display:inline-block;position:relative;width:1em;color:transparent}
+.report .ellipsis-glyph::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 50%,#223a48 0 .073em,transparent .085em),radial-gradient(circle at 50% 50%,#223a48 0 .073em,transparent .085em),radial-gradient(circle at 82% 50%,#223a48 0 .073em,transparent .085em);print-color-adjust:exact}
