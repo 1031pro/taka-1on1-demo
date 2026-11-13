@@ -22,3 +22,5 @@ body[data-screen="intro"] #app {display:grid;place-items:center;min-height:100sv
 .entry-hint {margin:0;color:#606060;font:400 clamp(13px,2.3cqw,19px)/1.5 ReportSans,sans-serif}
 .entry-credit {display:block;margin:10.8cqw auto 0;text-align:center;color:#757575;font:normal 3cqw/1.5 "Segoe UI",Meiryo,sans-serif}
 @media(max-width:640px){body[data-screen="intro"] #app{padding:0;background:white;place-items:start center}.entry-card{width:100%}}
+
+.entry-guide {width:84%;margin-inline:auto}

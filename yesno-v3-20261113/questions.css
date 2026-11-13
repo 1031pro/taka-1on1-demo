@@ -119,3 +119,14 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
 .guide-row summary::-webkit-details-marker {display:none}
 .guide-row .answer-guide {max-width:none;margin:8px 0 0}
 @media(max-width:640px){.question.flat-question{margin:8px auto}.flat-question progress{margin:14px 0 18px}.flat-question .binary-choices{gap:8px}.flat-question .binary-choices button{min-height:92px;font-size:14px}.flat-question .binary-choices .missing-answer{min-height:44px}.guide-row{font-size:12px}}
+
+@media screen and (max-width:820px) {
+  .report .flow-text > .phrase {white-space:normal}
+  .report .flow-text > wbr {display:none}
+  .report .flow-text {line-break:strict;word-break:auto-phrase;text-wrap:pretty}
+  .report .report-content > section + section {margin-top:20px}
+  .report .context,.report .reason {margin-bottom:0}
+  .report .context {line-height:1.55}
+  .report .context .flow-text {word-break:normal;text-wrap:pretty}
+  .report .context .phrase {white-space:normal}
+}
