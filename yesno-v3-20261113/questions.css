@@ -189,3 +189,5 @@ body[data-screen=question] .flat-question h1 {font-family:ReportSans,sans-serif;
  .focus-step .focus-options{order:1}
  .focus-step #back{align-self:flex-start;margin:0 0 12px}
 }
+
+.report .reader-note{display:block;white-space:nowrap}.report .signs ul.signs-copy{margin:0;padding-inline-start:1.3em;list-style:disc}.report .rank em{white-space:nowrap}
