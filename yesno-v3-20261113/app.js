@@ -23,6 +23,7 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
 function promptMarkup(text){
+ if(text.includes("『繰り返し』尋ねる")) return text.split("『繰り返し』尋ねる").map(guardedCopy).join('<span class="break-guard"><strong>『繰り返し』</strong>尋ねる</span>');
  return text.split(/(『[^』]+』)/g) .map((part,i,parts)=>{
   if(part.startsWith('『'))return '<strong>'+guardedCopy(part)+'</strong>';
   const html=guardedCopy(part);
