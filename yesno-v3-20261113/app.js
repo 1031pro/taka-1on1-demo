@@ -22,15 +22,27 @@ function intro(){document.body.dataset.screen='intro';app.innerHTML=`<article cl
 <p class="entry-hint">回答は一問ずつ進みます</p></div>
 <small class="entry-credit">© 2026 株式会社アイエヌエー. All Rights Reserved.</small></section></article>`;document.querySelector('#start').onclick=()=>{answers=[];current=0;question();};}
 // All prompts share one grid cell so wrapping sets the same response position at each width.
+function promptMarkup(text){
+ return escapeHtml(text).replace(/『[^』]+』/g, phrase=>'<strong>'+phrase+'</strong>');
+}
 const promptSizers = questions.map(text =>
-  `<span class="prompt-sizer" aria-hidden="true" data-copy="${escapeHtml(text)}"></span>`
+  '<span class="prompt-sizer" aria-hidden="true">'+promptMarkup(text)+'</span>'
 ).join('');
 function question(){
  document.body.dataset.screen='question';
- app.innerHTML=`<section class="question"><p class="diagnosis-name">1on1コミュニケーション診断</p><div class="progress">${current+1} / 21 <progress value="${current+1}" max="21"></progress></div><div class="question-body"><p class="q-number">Q${String(current+1).padStart(2,'0')}</p><h1 class="prompt-slot"><span>${escapeHtml(questions[current])}</span>${promptSizers}</h1><div class="binary-choices">${['Yes','No'].map(label=>`<button type="button" data-answer="${label}" aria-pressed="${answers[current]===label}"><img src="yesno-v3-20261113/${label.toLowerCase()}-front3.png" alt="${label==='Yes'?'はい':'いいえ'}" width="192" height="192"></button>`).join('')}<button type="button" class="missing-answer" data-answer="missing" aria-pressed="${answers[current]==='missing'}">該当する場面がなかった</button></div><hr class="answer-rule"><p class="answer-guide">「はい」：その場面の半数を超える機会で実際に行った／「いいえ」：半数以下だった／「該当する場面がなかった」：経験がなく判断できない。</p>${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
+ const number=String(current+1).padStart(2,'0');
+ const choices=[['Yes','はい','当てはまる'],['No','いいえ','当てはまらない']];
+ app.innerHTML=`<section class="question flat-question"><div class="question-body">
+ <header class="quiz-header"><span>1on1コミュニケーション診断</span><span>${number} / 21</span></header>
+ <progress aria-label="診断の進捗" value="${current+1}" max="21"></progress>
+ <p class="q-number">Q${number}</p><h1 class="prompt-slot"><span>${promptMarkup(questions[current])}</span>${promptSizers}</h1>
+ <div class="binary-choices">${choices.map(([value,label,sub])=>`<button type="button" data-answer="${value}" aria-pressed="${answers[current]===value}"><span class="choice-dot" aria-hidden="true"></span><b>${label}</b><span>${sub}</span></button>`).join('')}
+ <button type="button" class="missing-answer" data-answer="missing" aria-pressed="${answers[current]==='missing'}"><span aria-hidden="true">⊖</span> 該当する場面がなかった</button></div>
+ <hr class="answer-rule"><div class="guide-row"><span>最近3か月間の実際の行動で判断</span><details><summary><span aria-hidden="true">ⓘ</span> 回答の目安</summary><p class="answer-guide">「はい」：その場面の半数を超える機会で実際に行った／「いいえ」：半数以下だった／「該当する場面がなかった」：経験がなく判断できない。</p></details></div>
+ ${current?'<button id="back" class="back">← 前の質問</button>':''}</div></section>`;
  app.querySelectorAll('[data-answer]').forEach(button=>button.onclick=()=>{
   if(transitioning)return;
-  transitioning=true;answers[current]=button.dataset.answer;button.setAttribute('aria-pressed','true');
+  transitioning=true;answers[current]=button.dataset.answer;app.querySelectorAll('[data-answer]').forEach(option=>option.setAttribute('aria-pressed',String(option===button)));
   setTimeout(()=>{transitioning=false;if(++current===questions.length)result();else question();},180);
  });
  app.querySelector('#back')?.addEventListener('click',()=>{if(!transitioning){current--;question();}});window.scrollTo(0,0);
