@@ -54,3 +54,6 @@
 
 .report .changes.changes-new > div > b {height:44px;line-height:30px;display:flex;align-items:center;padding-block:7px;box-sizing:border-box}
 .report .changes.changes-new > div > ul,.report .changes.changes-new > div > p {padding-bottom:9px}
+
+.report .changes.changes-new > div:nth-child(n) > .source-crop.new-picto{width:82px;height:65px;transform:none;isolation:isolate}
+@media screen and (max-width:820px){.report .changes.changes-new > div:nth-child(n) > .source-crop.new-picto{width:60px;height:48px}}
