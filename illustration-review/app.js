@@ -230,7 +230,8 @@ function reviewIcon(side){
   return '<svg class="source-crop" viewBox="0 0 1633 963"><image href="illustration-review/taka-left.png" width="1633" height="963"/></svg>';
  }
  const box=side==='left'?'63 104 790 630':'1048 104 798 630';
- return '<svg class="source-crop new-picto" viewBox="'+box+'"><image href="illustration-review/proposal-pair.png" width="1914" height="822"/></svg>';
+ const color=side==='left'?'#233c4b':'#9a213c';
+ return '<svg class="source-crop new-picto" viewBox="'+box+'"><defs><filter id="ink-'+side+'" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.5 0 0 1.35"/><feComponentTransfer><feFuncA type="gamma" amplitude="1" exponent="1.2" offset="0"/></feComponentTransfer><feFlood flood-color="'+color+'"/><feComposite operator="in" in2="SourceGraphic"/></filter><filter id="alpha-'+side+'" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.5 0 0 1.35" result="mask"/><feFlood flood-color="'+color+'"/><feComposite operator="in" in2="mask"/></filter></defs><image href="illustration-review/proposal-pair.png" width="1914" height="822" filter="url(#alpha-'+side+')"/></svg>';
 }
 const reviewType=Math.max(0,Math.min(6,Number(new URLSearchParams(location.search).get('type')||0)));
 answers=questions.map((q,i)=>reports[reviewType].questions.includes(i+1)?window.CONTENT.pointAnswers[i]:(window.CONTENT.pointAnswers[i]==='Yes'?'No':'Yes'));
