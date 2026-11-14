@@ -35,3 +35,19 @@
 @font-face{font-family:ReportSerif;src:url('fonts/serif-400.woff2') format('woff2');font-weight:100 499;font-display:swap}
 @font-face{font-family:ReportSerif;src:url('fonts/serif-600.woff2') format('woff2');font-weight:500 649;font-display:swap}
 @font-face{font-family:ReportSerif;src:url('fonts/serif-750.woff2') format('woff2');font-weight:650 900;font-display:swap}
+
+/* 支給イラストを元の切り出しで復元。本文と独立した共通幅の列で中央をそろえる。 */
+.report .changes.changes-new > div {
+ display:grid;grid-template-columns:minmax(0,1fr) 100px;column-gap:14px;row-gap:0;align-items:center;grid-template-rows:40px minmax(0,1fr);
+}
+.report .changes.changes-new > div > b {grid-column:1 / -1;letter-spacing:0}
+.report .changes.changes-new > div > .source-crop {
+ position:static;grid-column:2;grid-row:2;justify-self:center;align-self:center;margin:0;
+}
+.report .changes.changes-new > div:first-child > .source-crop {width:100px;height:59px}
+.report .changes.changes-new > div:last-child > .source-crop {width:72px;height:58px}
+@media screen and (max-width:820px) {
+ .report .changes.changes-new > div {grid-template-columns:minmax(0,1fr) 68px;column-gap:12px}
+ .report .changes.changes-new > div:first-child > .source-crop {width:68px;height:40.12px}
+ .report .changes.changes-new > div:last-child > .source-crop {width:48.96px;height:39.44px}
+}
