@@ -57,3 +57,6 @@
 
 .report .changes.changes-new > div:nth-child(n) > .source-crop.new-picto{width:82px;height:65px;transform:none;isolation:isolate}
 @media screen and (max-width:820px){.report .changes.changes-new > div:nth-child(n) > .source-crop.new-picto{width:60px;height:48px}}
+
+/* 支給指示: 会話の補足を発言の直後に置く。 */
+.report .dialogue .reader-note{display:inline;white-space:normal}
