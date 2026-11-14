@@ -45,6 +45,7 @@ const promptSegmenter = typeof Intl.Segmenter==='function' ? new Intl.Segmenter(
 // 各設問で改行する読点の順番（引用内の読点も数える）。
 const questionBreakComma = [1,2,2,2,2,3,2,1,1,2,1,2,2,2,2,1,2,1,2,1,2];
 function promptMarkup(text){
+ if(text===questions[1])return ["決めた確認日よりも前に、","「あの件、どうなった？」と","『繰り返し尋ねる』ことが多い。"].map(promptMarkup).join('<br class="question-comma-break">');
  const ordinal=questionBreakComma[questions.indexOf(text)];
  if(ordinal){
   const comma=Array.from(text.matchAll(/、/gu))[ordinal-1];
