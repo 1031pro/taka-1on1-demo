@@ -1,0 +1,37 @@
+.report .changes.changes-new > div {
+ display:block;
+ padding:14px 18px;
+ min-height:0;
+}
+.report .changes.changes-new > div > b {
+ display:block;
+ position:static;
+ width:auto;
+ height:auto;
+ min-width:0;
+ writing-mode:horizontal-tb;
+ padding:0 0 10px;
+ background:none;
+ color:#213847;
+ font-size:20px;
+ line-height:1.5;
+ text-align:left;
+}
+.report .changes.changes-new > div:last-child > b {color:#94213c}
+.report .changes.changes-new ul {padding:0 0 0 18px;margin:0}
+.report .changes.changes-new p {margin:0;font-weight:600;line-height:1.65}
+.report .changes.changes-new li + li {margin-top:5px}
+.report .changes.changes-new li::before {left:-14px;border-top-width:3px;border-bottom-width:3px;border-left-width:5px;top:.7em}
+.report .reader-note {white-space:normal}
+@media screen and (max-width:820px) {
+ .report .changes.changes-new > div {padding:14px 16px}
+ .report .changes.changes-new > div > b {font-size:18px}
+ .report .changes.changes-new ul,.report .changes.changes-new p {font-size:16px;line-height:1.65}
+}
+
+@font-face{font-family:ReportSans;src:url('fonts/sans-400.woff2') format('woff2');font-weight:100 499;font-display:swap}
+@font-face{font-family:ReportSans;src:url('fonts/sans-600.woff2') format('woff2');font-weight:500 649;font-display:swap}
+@font-face{font-family:ReportSans;src:url('fonts/sans-750.woff2') format('woff2');font-weight:650 900;font-display:swap}
+@font-face{font-family:ReportSerif;src:url('fonts/serif-400.woff2') format('woff2');font-weight:100 499;font-display:swap}
+@font-face{font-family:ReportSerif;src:url('fonts/serif-600.woff2') format('woff2');font-weight:500 649;font-display:swap}
+@font-face{font-family:ReportSerif;src:url('fonts/serif-750.woff2') format('woff2');font-weight:650 900;font-display:swap}
